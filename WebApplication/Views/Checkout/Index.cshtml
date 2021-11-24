@@ -1,0 +1,178 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model CheckoutViewModel
+@{
+    ViewBag.Title = "CartIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var culture = CultureInfo.CurrentCulture.Name;
+}
+@using WebApplicationData.Enties;
+@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<User> _signInManager;
+
+
+@section scripts{
+    <script src="~/js/cart.js"></script>
+    <script>
+        var cartController = new CartController();
+        cartController.initialize();
+    </script>
+    <script src="https://www.paypal.com/sdk/js?client-id=AQmO0Z_PT_ILlV4jm8RbdBIMX-h-5wkygqoZwXnPpC4OnJkdQg-KHaPRzHjppmXFD6ffHuPUw05RCVL1&components=buttons"></script>
+    <script>
+        
+        paypal.Buttons({
+            
+            style: {
+                layout: 'vertical',
+                color: 'blue',
+                shape: 'rect',
+                label: 'paypal',
+                
+            }, createOrder: function (data, actions) {
+                // Set up the transaction
+                return actions.order.create({
+                    
+                    
+                    purchase_units: [{
+                        amount: {
+                            value: "${#lbl_total}",
+                            currency_code :"USD"
+                        }
+                    }]
+                });
+            }
+        }).render('#paypal-button-container');
+    </script>
+}
+
+
+
+<div class="breadcrumbs">
+    <ol class="breadcrumb">
+        <li><a href="#">Home</a></li>
+        <li class="active">Check out</li>
+    </ol>
+</div><!--/breadcrums-->
+
+<div class="step-one">
+    <h2 class="heading">Step1</h2>
+</div>
+<div class="checkout-options">
+    <h3>New User</h3>
+    <p>Checkout options</p>
+    <ul class="nav">
+        <li>
+            <label><input type="checkbox"> Register Account</label>
+        </li>
+        <li>
+            <label><input type="checkbox"> Guest Checkout</label>
+        </li>
+        <li>
+            <a href=""><i class="fa fa-times"></i>Cancel</a>
+        </li>
+    </ul>
+</div><!--/checkout-options-->
+
+<div class="register-req">
+    <p>Please use Register And Checkout to easily get access to your order history, or use Checkout as Guest</p>
+</div><!--/register-req-->
+
+<div class="shopper-informations">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="shopper-info">
+                <p>Shopper Information</p>
+                <form>
+                    <input type="text" placeholder="Display Name">
+                    <input type="text" placeholder="User Name">
+                    <input type="password" placeholder="Password">
+                    <input type="password" placeholder="Confirm password">
+                </form>
+                <a class="btn btn-primary" href="">Get Quotes</a>
+                <a class="btn btn-primary" href="">Continue</a>
+            </div>
+        </div>
+        <div class="col-sm-5 clearfix">
+            <div class="bill-to">
+                <p>Bill To</p>
+                <div class="form-one">
+                    @if (_signInManager.IsSignedIn(User))
+                    {
+                        <form asp-controller="Checkout" asp-action="Checkout" method="post">
+                            <input type="text"  asp-for="CheckoutModel.UserName" value="@User.Identity.Name">
+                            <input type="text" id="Name"  asp-for="CheckoutModel.Name" placeholder="Name *">
+                            <input type="text"  id="Email" asp-for="CheckoutModel.Email" placeholder="Email *">
+                            <input type="text"  id="Phone"  asp-for="CheckoutModel.PhoneNumber" placeholder="Phone *">
+                            <input type="text" id="Address"  asp-for="CheckoutModel.Address" placeholder="Address *">
+                            <button type="submit" class="btn btn-default">Purchase</button>
+                        </form>
+                     }else {
+                         <a href="/@culture/Account/Login">Please Login to Purchase</a>
+                    }
+                    </div>
+
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="order-message">
+                <p>Shipping Order</p>
+                <textarea name="message" placeholder="Notes about your order, Special Notes for Delivery" rows="16"></textarea>
+                <label><input type="checkbox"> Shipping to bill address</label>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="review-payment">
+    <h2>Review & Payment</h2>
+</div>
+
+<div class="table-responsive cart_info">
+    <table class="table table-condensed" id="tbl_cart">
+        <thead>
+            <tr class="cart_menu">
+                <td class="image">Hình sản phẩm</td>
+                <td class="description">Tên sản phẩm</td>
+                <td class="price">Giá</td>
+                <td class="quantity">Số lượng</td>
+                <td class="total">Giá tổng</td>
+                <td class="remove">Xóa</td>
+            </tr>
+        </thead>
+        <tbody id="cart_body">
+        </tbody>
+
+
+    </table>
+    
+</div>
+<div class="payment-options">
+    <span>
+        <label><input type="checkbox"> Direct Bank Transfer</label>
+    </span>
+    <span>
+        <label><input type="checkbox"> Check Payment</label>
+    </span>
+    
+        <a asp-action="PaypalCheckout">
+            Thanh Toán
+        </a>
+    
+    <div id="paypal-button-container"></div>
+
+    
+    
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+

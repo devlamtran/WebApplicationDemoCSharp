@@ -1,0 +1,96 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewBag.Title = "IndexAdminUser";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+}
+@using WebApplicationLogic.Dtos
+@model PageResult<WebApplicationLogic.Catalog.Sales.Dto.OrderViewModel>
+
+
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Danh sách Hóa đơn</h1>
+    
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <a asp-action="Create" asp-controller="User" class="m-0 font-weight-bold text-primary btn-success"> Tạo mới </a>
+            <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" asp-action="Index" method="get">
+                <div class="input-group">
+                    <input name="keyword" type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                           aria-label="Search" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="button">
+                            <i class="fas fa-search fa-sm"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Tên</th>
+                            <th>Số điện thoại</th>
+                            <th>Email</th>
+                            <th>Ngày Order</th>
+                            <th>Trạng thái</th>
+                            <th>Action</th>
+
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Id</th>
+                            <th>Tên</th>
+                            <th>Số điện thoại</th>
+                            <th>Email</th>
+                            <th>Ngày Order</th>
+                            <th>Trạng thái</th>
+                            <th>Action</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @foreach (var item in Model.Items)
+                        {
+                        <tr>
+
+                            <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                            <td>@Html.DisplayFor(modelItem => item.ShipName) </td>
+                            <td>@Html.DisplayFor(modelItem => item.ShipPhoneNumber)</td>
+                            <td>@Html.DisplayFor(modelItem => item.ShipEmail)</td>
+                            <td>@Html.DisplayFor(modelItem => item.OrderDate)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Status)</td>
+                            <td>
+                                @Html.ActionLink("Xóa", "Delete", new { id = item.Id }) |
+                                @Html.ActionLink("xem đơn hàng", "Details", new { id = item.Id })
+                            </td>
+
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            @await Component.InvokeAsync("PagerAdmin", Model)
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+

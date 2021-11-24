@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewData["Title"] = "IndexProduct";
+    Layout = "~/Views/Shared/_LayoutSideBar.cshtml";
+}
+@inject LazZiya.ExpressLocalization.ISharedCultureLocalizer _loc;
+@{
+    var culture = CultureInfo.CurrentCulture.Name;
+
+}
+@using WebApplicationLogic.Dtos
+@model PageResult<WebApplicationLogic.Catalog.Products.Dto.ProductViewModel>
+
+<div class="features_items">
+    <!--features_items-->
+    <h2 class="title text-center">Danh sách sản phẩm</h2>
+    @for (int i = 0; i < Model.Items.Count; i++)
+    {
+        var item = Model.Items[i];
+        <div class="col-sm-4">
+            <div class="product-image-wrapper">
+                <div class="single-products">
+                    <div class="productinfo text-center">
+                        <img src="/@item.ThumbnailImage" alt="@item.Name" />
+                        <h2>@item.Price.</h2>
+                        <p>@item.Name</p>
+                        <a href="#" class="btn btn-default add-to-cart" data-id="@item.Id" data-culture=" @culture"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+
+                    </div>
+
+                </div>
+                <div class="choose">
+                    <ul class="nav nav-pills nav-justified">
+                        <li><a href="/@culture/@_loc["productUrl"]/@item.Id"><i class="fa fa-plus-square"></i>Detail</a></li>
+                        <li><a href=""><i class="fa fa-plus-square"></i>Add to compare</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    }
+
+
+    @await Component.InvokeAsync("Pager", Model)
+
+
+
+</div><!--features_items-->

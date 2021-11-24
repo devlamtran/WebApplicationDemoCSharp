@@ -1,0 +1,100 @@
+﻿@using WebApplicationLogic.Dtos
+@model PageResult<WebApplicationLogic.Catalog.Sales.Dto.OrderDetailViewModel>
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Chi tiết Hóa đơn</h1>
+    <p class="mb-4">
+        DataTables is a third party plugin that is used to generate the demo table below.
+        For more information about DataTables, please visit the <a target="_blank"
+                                                                   href="https://datatables.net">official DataTables documentation</a>.
+    </p>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+
+            <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" asp-action="Details" method="get">
+                <div class="input-group">
+                    <input name="keyword" onchange="this.form.submit()" type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                           aria-label="Search" aria-describedby="basic-addon2">
+
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="button">
+                            <i class="fas fa-search fa-sm"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+
+                            <th>Hình SP</th>
+                            <th>Tên</th>
+                            <th>Giá</th>
+                            <th>Số lượng</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Hình SP</th>
+                            <th>Tên</th>
+                            <th>Giá</th>
+                            <th>Số lượng</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @foreach (var item in Model.Items)
+                        {
+                            
+                            <tr>
+                                <td><img width="80" src="/@Html.DisplayFor(modelItem => item.Image)" alt=""></td>
+                                <td>@Html.DisplayFor(modelItem => item.Name) </td>
+                                <td>@Html.DisplayFor(modelItem => item.Price)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Quantity)</td>             
+                            </tr>
+                            
+                        }
+                    </tbody>
+                </table>
+            </div>
+            @await Component.InvokeAsync("Pager", Model)
+        </div>
+    </div>
+
+</div>
+<section id="do_action">
+    <div class="container">
+        <div class="heading">
+            <h3>Tổng tiền Đơn hàng</h3>
+        </div>
+        <div class="row">
+            
+            <div class="col-sm-6">
+               
+                <div class="total_area">
+                    <ul>
+                        <li>Tổng tiền <span>@ViewBag.TotalPrice</span></li>                       
+                        <li>Phí Ship <span>Free</span></li>
+                        <li>Tổng tiền đơn hàng <span>$61</span></li>
+                    </ul>
+                    
+                    <a class="btn btn-default check_out" href="">Thanh toán</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!--/#do_action-->

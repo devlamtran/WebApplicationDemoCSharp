@@ -1,0 +1,52 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+
+@model WebApplicationLogic.Dtos.PageResultBase
+@{
+    var urlTemplate = Url.Action() + "?page={0}";
+    var request = ViewContext.HttpContext.Request;
+    foreach (var key in request.Query.Keys)
+    {
+        if (key == "page")
+        {
+            continue;
+        }
+        if (request.Query[key].Count > 1)
+        {
+            foreach (var item in (string[])request.Query[key])
+            {
+                urlTemplate += "&" + key + "=" + item;
+            }
+        }
+        else
+        {
+            urlTemplate += "&" + key + "=" + request.Query[key];
+        }
+    }
+
+    var startIndex = Math.Max(Model.PageSize - 5, 1);
+    var finishIndex = Math.Min(Model.PageSize + 5, Model.PageCount);
+}
+
+@if (Model.PageCount > 1)
+{
+    <ul class="pagination">
+        @for (var i = startIndex; i <= finishIndex; i++)
+        {
+            if (i == Model.PageIndex)
+            {
+                <li class="active"><a href="">@i</a></li>
+
+            }
+            else
+            {
+                <li class=""><a href="@urlTemplate.Replace("{0}", i.ToString())">@i</a></li>
+
+            }
+        }
+
+
+    </ul>
+}
