@@ -1,1 +1,6 @@
-1 # Lam web .Net 5/2/1998 .....
+This project is written by :
+
+- Language Program : C#, javascript
+- Tech skills : Entity Framework, .Net core (.net5) MVC, Ajax,...
+- Database : SQL Server
+- Template : Blazor Page
