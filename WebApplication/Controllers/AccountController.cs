@@ -16,19 +16,19 @@ using WebApplication.Models;
 using WebApplicationData.Enties;
 using WebApplicationLogic.Catalog.Users;
 using WebApplicationLogic.Catalog.Users.Dto;
-
+using Microsoft.AspNetCore.Identity;
 namespace WebApplication.Controllers
 {
     
     public class AccountController : Controller
     {
         private readonly IUserService _userService;
-      
+        private readonly SignInManager<User> _signInManager;
         private readonly IConfiguration _configuration;
 
-        public AccountController(IUserService userService, IConfiguration configuration)
+        public AccountController(IUserService userService, SignInManager<User> signInManager,IConfiguration configuration)
         {
-   
+            _signInManager = signInManager;
             _configuration = configuration;
             _userService = userService;
         }
@@ -36,7 +36,11 @@ namespace WebApplication.Controllers
         [HttpGet("Account/Login")]
         public IActionResult Login()
         {
-            
+            if (_signInManager.IsSignedIn(User))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             return View();
         }
 
@@ -71,8 +75,13 @@ namespace WebApplication.Controllers
 
         public IActionResult Login1()
         {
+            if (_signInManager.IsSignedIn(User))
+            {
+                return RedirectToAction("Index", "Home");
+            }
 
             return View();
+
         }
 
 

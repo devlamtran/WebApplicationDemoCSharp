@@ -13,7 +13,6 @@
 }
 
 
-
 @section slider{
     <section id="slider">
         <!--slider-->
@@ -36,8 +35,8 @@
                                     <button type="button" class="btn btn-default get">Get it now</button>
                                 </div>
                                 <div class="col-sm-6">
-                                    <img src="images/home/girl1.jpg" class="girl img-responsive" alt="" />
-                                    <img src="images/home/pricing.png" class="pricing" alt="" />
+                                    <img src="images/home/banner.jpg" class="girl img-responsive" alt="" />
+                                   
                                 </div>
                             </div>
                             <div class="item">
@@ -49,7 +48,7 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <img src="images/home/girl2.jpg" class="girl img-responsive" alt="" />
-                                    <img src="images/home/pricing.png" class="pricing" alt="" />
+                                    
                                 </div>
                             </div>
 
@@ -62,7 +61,7 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <img src="images/home/girl3.jpg" class="girl img-responsive" alt="" />
-                                    <img src="images/home/pricing.png" class="pricing" alt="" />
+                                    
                                 </div>
                             </div>
 
@@ -94,7 +93,7 @@
                 <div class="single-products">
                     <div class="productinfo text-center">
                         <img src="/@item.ThumbnailImage" alt="@item.Name" />
-                        <h2>@item.Price.ToString()</h2>
+                        <h2>@item.Price.ToString("#,###", new CultureInfo("vi-vn")) đ</h2>
                         <p>@item.Name</p>
                         <a href="" class="btn btn-default add-to-cart" data-id="@item.Id" ><i class="fa fa-shopping-cart"></i>Add to cart</a>
                     </div>

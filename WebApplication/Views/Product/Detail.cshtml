@@ -47,7 +47,7 @@
             <p>Web ID: 1089772</p>
             <img src="/images/product-details/rating.png" alt="" />
             <span>
-                <span>@Model.Product.Price.ToString()</span>
+                <span>@Model.Product.Price.ToString("#,###", new CultureInfo("vi-vn")) đ</span>
                 <label>Quantity:</label>
                 <input type="text" value="3" />
                 <button type="button" class="btn btn-fefault cart add-to-cart" data-id="@Model.Product.Id" data-culture=" @culture">
