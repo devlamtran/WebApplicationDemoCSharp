@@ -23,7 +23,7 @@
                 <div class="single-products">
                     <div class="productinfo text-center">
                         <img src="/@item.ThumbnailImage" alt="@item.Name" />
-                        <h2>@item.Price.</h2>
+                        <h2>@item.Price.ToString("#,###", new CultureInfo("vi-vn")) đ</h2>
                         <p>@item.Name</p>
                         <a href="#" class="btn btn-default add-to-cart" data-id="@item.Id" data-culture=" @culture"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 

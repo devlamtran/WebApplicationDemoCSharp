@@ -70,22 +70,26 @@
                     <tbody>
                         @foreach (var item in Model.Items)
                         {
-                            <tr>
+                        <tr>
 
-                                <td><img width="80" src="/@Html.DisplayFor(modelItem => item.ThumbnailImage)" alt=""></td>
-                                <td>@Html.DisplayFor(modelItem => item.Name) </td>
-                                <td>@Html.DisplayFor(modelItem => item.OriginalPrice)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Price)</td>
-                                <td>@Html.DisplayFor(modelItem => item.ViewCount)</td>
-                                <td>
+                            <td><img width="80" src="/@Html.DisplayFor(modelItem => item.ThumbnailImage)" alt=""></td>
+                            <td>@Html.DisplayFor(modelItem => item.Name) </td>
+                            @{
+                                string OriginalPrice = item.OriginalPrice.ToString("#,###", new CultureInfo("vi-vn")) +" đ";
+                                string Price = item.Price.ToString("#,###", new CultureInfo("vi-vn")) +" đ";
+                            }
+                            <td>@Html.DisplayFor(modelItem => OriginalPrice)</td>
+                            <td>@Html.DisplayFor(modelItem => Price)</td>
+                            <td>@Html.DisplayFor(modelItem => item.ViewCount)</td>
+                            <td>
 
-                                    @Html.ActionLink("Xóa", "Delete", new { id = item.Id }) |
-                                    @Html.ActionLink("Edit", "Edit", new { id = item.Id })
-                                    @Html.ActionLink("CategoryAssign", "CategoryAssign", new { id = item.Id })
+                                @Html.ActionLink("Xóa", "Delete", new { id = item.Id }) |
+                                @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+                                @Html.ActionLink("CategoryAssign", "CategoryAssign", new { id = item.Id })
 
-                                </td>
+                            </td>
 
-                            </tr>
+                        </tr>
                         }
                     </tbody>
                 </table>
