@@ -100,7 +100,7 @@
                     @if (_signInManager.IsSignedIn(User))
                     {
                         <form asp-controller="Checkout" asp-action="Checkout" method="post">
-                            <input type="text"  asp-for="CheckoutModel.UserName" value="@User.Identity.Name">
+                            <input type="hidden" asp-for="CheckoutModel.UserName" value="@User.Identity.Name">
                             <input type="text" id="Name"  asp-for="CheckoutModel.Name" placeholder="Name *">
                             <input type="text"  id="Email" asp-for="CheckoutModel.Email" placeholder="Email *">
                             <input type="text"  id="Phone"  asp-for="CheckoutModel.PhoneNumber" placeholder="Phone *">

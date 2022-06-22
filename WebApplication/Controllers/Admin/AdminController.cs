@@ -9,7 +9,7 @@ namespace WebApplication.Controllers.Admin
 {
     public class AdminController : Controller
     {
-        [Authorize(Roles = "ADMIN")]
+        
         public IActionResult Index()
         {
             return View();

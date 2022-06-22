@@ -1,4 +1,4 @@
-﻿@model WebApplicationLogic.Catalog.Products.Dto.ProductDeleteRequest
+﻿@model WebApplicationLogic.Catalog.Roles.Dto.RoleDeleteRequest
 
 @{
     ViewData["Title"] = "Delete";
@@ -7,7 +7,7 @@
 <div class="container-fluid">
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Delete this product</h1>
+    <h1 class="h3 mb-2 text-gray-800">Delete this role ?</h1>
     <p class="mb-4">
         DataTables is a third party plugin that is used to generate the demo table below.
         For more information about DataTables, please visit the <a target="_blank"
@@ -17,20 +17,19 @@
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <a asp-action="Index" asp-controller="ProductAdmin" class="m-0 font-weight-bold text-primary btn-success"> Về Danh sách Sản phẩm </a>
+            <a asp-action="Index" asp-controller="RoleAdmin" class="m-0 font-weight-bold text-primary btn-success"> Về Danh sách Danh mục </a>
         </div>
         <div class="card-body">
-            <h4>ProductDeleteRequest</h4>
+            <h4>Delete Role </h4>
             
 
             <form asp-action="Delete">
                 <input type="submit" value="Delete" class="btn btn-danger" /> |
-                <a asp-action="Index">Back to List</a>
+
             </form>
 
         </div>
     </div>
 
 </div>
-
 

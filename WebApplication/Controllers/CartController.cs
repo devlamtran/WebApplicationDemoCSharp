@@ -58,7 +58,10 @@ namespace WebApplication.Controllers
             if (currentCart.Any(x => x.ProductId == id))
             {
                 quantity = currentCart.First(x => x.ProductId == id).Quantity + 1;
+                currentCart.Remove(currentCart.First(x => x.ProductId == id));
+
             }
+
 
             var cartItem = new CartItemViewModel()
             {

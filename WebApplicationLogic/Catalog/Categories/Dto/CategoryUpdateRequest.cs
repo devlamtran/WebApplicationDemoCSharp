@@ -1,22 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace WebApplicationLogic.Catalog.Categories.Dto
 {
-    public  class CategoryViewModel
+    public class CategoryUpdateRequest
     {
-        public int Id { get; set; }
-
-        public string Name { get; set; }
-
-        public int? ParentId { get; set; }
-
-        public string SeoAlias { set; get; }
-
+        public int Id { set; get; }
+        public string Name { set; get; }
         public string SeoDescription { set; get; }
         public string SeoTitle { set; get; }
         public string LanguageId { set; get; }
-
+        public string SeoAlias { set; get; }
     }
 }

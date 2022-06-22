@@ -20,9 +20,12 @@
                 <div class="login-form">
                     <!--login form-->
                     <h2>Login to your account</h2>
+                @Html.ValidationSummary(true,"", new {@class ="text-danger"})
                     <form asp-controller="Account" asp-action="Login" method="post">
                         <input type="text" asp-for="UserName" placeholder="User Name" />
+                        @Html.ValidationMessageFor(model => model.UserName, " ", new { @class = "text-danger" })
                         <input type="password" asp-for="Password" placeholder="Password" />
+                        @Html.ValidationMessageFor(model => model.Password, " ", new { @class = "text-danger" })
                         <span>
                             <input type="checkbox" class="checkbox">
                             Keep me signed in

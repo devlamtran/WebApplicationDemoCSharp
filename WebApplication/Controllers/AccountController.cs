@@ -48,12 +48,12 @@ namespace WebApplication.Controllers
         public async Task<IActionResult> Login(LoginRequest request)
         {
             if (!ModelState.IsValid)
-                return View();
+                return View(request);
 
             var result = await _userService.Authencate(request);
             if (result == null)
             {
-                // ModelState.AddModelError("", "Login failure");
+                ModelState.AddModelError("", "Login failure");
                 return View();
             }
             var userPrincipal = ValidateToken(result);
@@ -89,12 +89,12 @@ namespace WebApplication.Controllers
         public async Task<IActionResult> Login1(LoginRequest request)
         {
             if (!ModelState.IsValid)
-                return View();
+                return View(request);
 
             var result = await _userService.Authencate(request);
             if (result == null)
             {
-               // ModelState.AddModelError("", "Login failure");
+                ModelState.AddModelError(" ", "tên đăng nhập hoặc mật khẩu không đúng");
                 return View();
             }
             var userPrincipal = ValidateToken(result);

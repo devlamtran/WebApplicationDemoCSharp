@@ -23,7 +23,7 @@ namespace WebApplication.Controllers
 
         public async Task<IActionResult> Index(string keyword, int? categoryId, int page = 1, int pageSize = 6)
         {
-           // var languageId = HttpContext.Session.GetString("DefaultLanguageId");
+           
 
             var request = new GetManageProductPagingRequest()
             {

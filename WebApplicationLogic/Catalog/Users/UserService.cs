@@ -161,7 +161,8 @@ namespace WebApplicationLogic.Catalog.Users
             var result = await _userManager.CreateAsync(user, request.Password);
             if (result.Succeeded)
             {
-                return true; ;
+                await _userManager.AddToRoleAsync(user, "USER");
+                return true; 
             }
             return false;
         }
