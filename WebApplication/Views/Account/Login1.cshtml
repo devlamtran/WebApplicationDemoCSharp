@@ -21,10 +21,10 @@
                     <!--login form-->
                     <h2>Login to your account</h2>
                     @Html.ValidationSummary(false)
-                    <form asp-controller="Account" asp-action="Login1" method="post">
-                        <input type="text" asp-for="UserName" placeholder="User Name" />@Html.ValidationMessageFor(model => model.UserName)
+                    <form asp-controller="Account" asp-action="Login1" method="post" name = "myForm" onsubmit = "return(validate());">
+                        <input type="text" name="userName" asp-for="UserName" placeholder="User Name" />@Html.ValidationMessageFor(model => model.UserName)
 
-                        <input type="password" asp-for="Password" placeholder="Password" /> @Html.ValidationMessageFor(model => model.Password)
+                        <input type="password"  name="password" asp-for="Password" placeholder="Password" /> @Html.ValidationMessageFor(model => model.Password)
 
                         <div>
                             <span>
@@ -44,3 +44,22 @@
         </div>
     </div>
 </section><!--/form-->
+<script type="text/javascript">
+   <!--
+      // Form validation code will come here.
+      function validate() {
+
+          if (document.myForm.userName.value == "" ) {
+            alert( "Please provide your name!" );
+            document.myForm.Name.focus() ;
+            return false;
+         }
+          if (document.myForm.password.value == "" ) {
+            alert( "Please provide your Email!" );
+            document.myForm.EMail.focus() ;
+            return false;
+         }
+         return( true );
+      }
+   //-->
+</script>

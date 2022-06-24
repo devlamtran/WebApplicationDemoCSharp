@@ -14,7 +14,7 @@ namespace WebApplicationLogic.Catalog.Users
         Task<bool> Register(RegisterRequest request);
         void Logout();
 
-        Task<bool> Update(string id, UserUpdateRequest request);
+        Task<bool> Update(UserUpdateRequest request);
 
         //Task<User> FindByEmail(string email);
 
@@ -26,7 +26,7 @@ namespace WebApplicationLogic.Catalog.Users
         Task<UserViewModel> GetById(string id);
 
         Task<bool> Delete(string id);
-
+        
         Task<bool> RoleAssign(String id, RoleAssignRequest request);
        
     }

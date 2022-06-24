@@ -12,7 +12,7 @@ using WebApplicationData.Enties;
 
 namespace WebApplication.Controllers.Admin
 {
-    
+    [Authorize(Roles = "ADMIN")]
     public class RoleAdminController : Controller
     {
         private readonly IConfiguration _configuration;

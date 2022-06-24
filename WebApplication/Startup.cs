@@ -179,6 +179,13 @@ namespace WebApplication
                       controller = "Checkout",
                       action = "Bill"
                   });
+                endpoints.MapControllerRoute(
+                  name: "Account Detail Vn",
+                  pattern: "{culture}/account/{userName?}", new
+                  {
+                      controller = "User",
+                      action = "Edit"
+                  });
 
                 endpoints.MapControllerRoute(
                    name: "default",

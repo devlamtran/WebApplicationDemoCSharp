@@ -41,6 +41,7 @@ var CustomController = function () {
             
 
         });
+        
     }
     function pagingEvents() {
         $('body').on('click', '.add-to-cart', function (e) {

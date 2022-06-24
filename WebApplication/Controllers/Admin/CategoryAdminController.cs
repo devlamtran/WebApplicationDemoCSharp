@@ -7,9 +7,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebApplicationLogic.Catalog.Categories;
 using WebApplicationLogic.Catalog.Categories.Dto;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApplication.Controllers.Admin
 {
+    [Authorize(Roles = "ADMIN")]
     public class CategoryAdminController : Controller
     {
         private readonly IConfiguration _configuration;

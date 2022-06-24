@@ -86,6 +86,7 @@ namespace WebApplication.Controllers
 
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Login1(LoginRequest request)
         {
             if (!ModelState.IsValid)
@@ -141,9 +142,14 @@ namespace WebApplication.Controllers
         [HttpGet]
         public IActionResult Register()
         {
+            if (_signInManager.IsSignedIn(User))
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Register(RegisterRequest registerRequest)
         {
             if (!ModelState.IsValid)

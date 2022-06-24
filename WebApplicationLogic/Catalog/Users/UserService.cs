@@ -36,7 +36,15 @@ namespace WebApplicationLogic.Catalog.Users
             var user = await _userManager.FindByNameAsync(request.UserName);
             if (user == null)
             {
-                return null;
+                if (await _userManager.FindByEmailAsync(request.UserName) == null)
+                {
+
+                    return null;
+                }
+                else {
+                    user = await _userManager.FindByEmailAsync(request.UserName);
+                };
+                
             }
             
             var result = await _signInManager.PasswordSignInAsync(user, request.Password, request.RememberMe, true);
@@ -196,13 +204,10 @@ namespace WebApplicationLogic.Catalog.Users
             return true;
         }
 
-        public async Task<bool> Update(string id, UserUpdateRequest request)
+        public async Task<bool> Update(UserUpdateRequest request)
         {
-            if (await _userManager.Users.AnyAsync(x => x.Email == request.Email && x.Id != id))
-            {
-                return false;
-            }
-            var user = await _userManager.FindByIdAsync(id.ToString());
+           
+            var user = await _userManager.FindByIdAsync(request.Id);
             user.Dob = request.Dob;
             user.Email = request.Email;
             user.FirstName = request.FirstName;

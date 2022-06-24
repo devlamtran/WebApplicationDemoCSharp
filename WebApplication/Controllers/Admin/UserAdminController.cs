@@ -12,14 +12,15 @@ using WebApplicationLogic.Catalog.Users.Dto;
 
 namespace WebApplication.Controllers.Admin
 {
-    [Authorize(Roles ="ADMIN")]
-    public class UserController : Controller
+
+    [Authorize(Roles = "ADMIN")]
+    public class UserAdminController : Controller
     {
         private readonly IUserService _userService;
         private readonly IConfiguration _configuration;
         private readonly IRoleService _roleService;
 
-        public UserController(IUserService userService, IConfiguration configuration, IRoleService roleService)
+        public UserAdminController(IUserService userService, IConfiguration configuration, IRoleService roleService)
         {
             _userService = userService;
             _configuration = configuration;
@@ -87,7 +88,7 @@ namespace WebApplication.Controllers.Admin
             if (!ModelState.IsValid)
                 return View();
 
-            var result = await _userService.Update(request.Id, request);
+            var result = await _userService.Update(request);
             if (result)
             {
                 //TempData["result"] = "Cập nhật người dùng thành công";
