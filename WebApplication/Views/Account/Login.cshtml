@@ -21,7 +21,7 @@
                     <!--login form-->
                     <h2>Login to your account</h2>
                 @Html.ValidationSummary(true,"", new {@class ="text-danger"})
-                    <form asp-controller="Account" asp-action="Login" method="post" name = "myForm" onsubmit = "return(validate());">
+                    <form asp-controller="Account" asp-action="Login" method="post" name ="myForm" onsubmit = "return(validate());">
                         <input type="text" name="userName" asp-for="UserName" placeholder="User Name" />
                         @Html.ValidationMessageFor(model => model.UserName, " ", new { @class = "text-danger" })
                         <input type="password" name="password" asp-for="Password" placeholder="Password" />
@@ -41,7 +41,7 @@
     </div>
 </section><!--/form-->
 <script type="text/javascript">
-   <!--
+   
       // Form validation code will come here.
       function validate() {
 

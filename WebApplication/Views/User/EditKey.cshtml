@@ -1,0 +1,73 @@
+﻿@model WebApplicationLogic.Catalog.Users.Dto.ResetPasswordViewModel
+
+@{
+    ViewData["Title"] = "EditKey";
+    Layout = "~/Views/Shared/_LayoutSideBar.cshtml";
+}
+<h3 class="mb-4">Password Settings</h3>
+
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+<form asp-controller="User" name="myForm" asp-action="EditKey" method="post" onsubmit="return(validate());">
+    <div class="row">
+        <input type="hidden" asp-for="Email" />
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Old password</label>
+                <input type="password" name="oldPassword" asp-for="OldPassword" class="form-control">
+                @Html.ValidationMessageFor(model => model.OldPassword, " ", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>New password</label>
+                <input type="password" name="password" asp-for="Password" class="form-control">
+                @Html.ValidationMessageFor(model => model.Password, " ", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Confirm new password</label>
+                <input type="password" name="confirmPassword" asp-for="ConfirmPassword" class="form-control">
+                @Html.ValidationMessageFor(model => model.ConfirmPassword, " ", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div>
+        <input type="submit" value="Save" class="btn btn-primary" />
+        <button class="btn btn-light">Cancel</button>
+    </div>
+</form>
+<script type="text/javascript">
+
+    // Form validation code will come here.
+    function validate() {
+
+        if (document.myForm.oldPassword.value == "") {
+            alert("Please provide your old password !");
+            document.myForm.oldPassword.focus();
+            return false;
+        }
+        if (document.myForm.password.value == "") {
+            alert("Please provide your password !");
+            document.myForm.password.focus();
+            return false;
+        }
+
+        if (document.myForm.confirmPassword.value == "") {
+            alert("Please confirm password !");
+            document.myForm.password.focus();
+            return false;
+        }
+        if (document.myForm.password.value != document.myForm.confirmPassword.value) {
+            alert("your password confirm not match !");
+            document.myForm.confirmPassword.focus();
+            return false;
+        }
+        return (true);
+    }
+   //-->
+</script>
+
+

@@ -28,7 +28,7 @@
     <link href="/css/animate.css" rel="stylesheet">
     <link href="/css/main.css" rel="stylesheet">
     <link href="/css/responsive.css" rel="stylesheet">
-   
+    <link href="/css/style.css" rel="stylesheet">
     
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
@@ -56,12 +56,12 @@
                                 @if (_signInManager.IsSignedIn(User))
                                 {
 
-                                    <li><a href="#"><i class="fa fa-envelope"></i> @User.Identity.Name</a></li>
+                                    <li><a href="/@culture/account/@User.Identity.Name"><i class="fa fa-user"></i> @User.Identity.Name</a></li>
 
                                 }
                                 else
                                 {
-                                    <li><a href="#"><i class="fa fa-envelope"></i> Guest</a></li>
+                                    <li><a href="#"> Guest</a></li>
 
                                 }
 
@@ -122,16 +122,16 @@
                                     }
                                     else
                                     {
-                                        <li><a href="/@culture/account/@User.Identity.Name"><i class="fa fa-user"></i> Tài khoản</a></li>
-                                        <li><a href="/@culture/bill/@User.Identity.Name"><i class="fa fa-user"></i> @_loc["Bill"]</a></li>
+                                        <li><a href="/@culture/accountKey/@User.Identity.Name"><i class="fa fa-key"></i> @_loc["Account"]</a></li>
+                                        <li><a href="/@culture/bill/@User.Identity.Name"><i class="fa fa-cc-visa"></i> @_loc["Bill"]</a></li>
                                         <li><a href="/@culture/Checkout/Index"><i class="fa fa-crosshairs"></i> @_loc["Checkout"]</a></li>
                                         <li><a href="/@culture/Cart/Index"><i class="fa fa-shopping-cart"></i>  @_loc["Cart"] [ <span id="lbl_number_items_header">0</span> ] </a></li>
-                                        <li><a href="/@culture/Account/Logout"><i class="fa fa-lock-open"></i>  @_loc["Logout"]</a></li>
+                                        <li><a href="/@culture/AccountRegister/Logout"><i class="fa fa-lock-open"></i>  @_loc["Logout"]</a></li>
                                     }
                                 }
                                 else
                                 {
-                                    <li><a href="/@culture/Account/Register"><i class="fa fa-star"></i>  @_loc["Register"]</a></li>
+                                    <li><a href="/@culture/AccountRegister/Register"><i class="fa fa-star"></i>  @_loc["Register"]</a></li>
                                     <li><a href="/@culture/Cart/Index"><i class="fa fa-shopping-cart"></i>  @_loc["Cart"] [ <span id="lbl_number_items_header">0</span> ] </a></li>
                                     <li><a href="/@culture/Account/Login1"><i class="fa fa-lock"></i> @_loc["Login"]</a></li>
 
@@ -168,11 +168,13 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-sm-3">
-                        <div class="search_box pull-right">
-                            <input type="text" placeholder="Search" />
+                    <form class="d-none d-sm-inline-block form-in" asp-controller="Product" asp-action="Index" method="get">
+                        <div class="col-sm-3">
+                            <div class="search_box pull-right">
+                                <input name="keyword" type="text" placeholder="Search" />
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div><!--/header-bottom-->

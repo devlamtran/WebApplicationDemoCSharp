@@ -14,5 +14,7 @@ namespace WebApplicationLogic.Catalog.Users.Dto
         public string Password { get; set; }
 
         public string ConfirmPassword { get; set; }
+
+        public string OldPassword { get; set; }
     }
 }

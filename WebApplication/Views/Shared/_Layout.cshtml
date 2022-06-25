@@ -105,15 +105,22 @@
                             <ul class="nav navbar-nav">
                                 @if (_signInManager.IsSignedIn(User))
                                 {
-
-
-                                    @if (User.IsInRole("ADMIN")) { 
-                                    <li><a href="/@culture/admin"> Admin </a></li>
-                                     }
-                                    <li><a href="/@culture/Checkout/Bill"><i class="fa fa-user"></i> Bill </a></li>
-                                    <li><a href="/@culture/Checkout/Index"><i class="fa fa-crosshairs"></i> @_loc["Checkout"]</a></li>
-                                    <li><a href="/@culture/Cart/Index"><i class="fa fa-shopping-cart"></i>  @_loc["Cart"] [ <span id="lbl_number_items_header">0</span> ] </a></li>
-                                    <li><a href="/@culture/Account/Logout"><i class="fa fa-lock-open"></i>  @_loc["Logout"]</a></li>
+                                    @if (User.IsInRole("ADMIN"))
+                                    {
+                                        <li><a href="/@culture/Admin/Index">Admin</a></li>
+                                        <li><a href="/@culture/bill/@User.Identity.Name"><i class="fa fa-user"></i> @_loc["Bill"]</a></li>
+                                        <li><a href="/@culture/Checkout/Index"><i class="fa fa-crosshairs"></i> @_loc["Checkout"]</a></li>
+                                        <li><a href="/@culture/Cart/Index"><i class="fa fa-shopping-cart"></i>  @_loc["Cart"] [ <span id="lbl_number_items_header">0</span> ] </a></li>
+                                        <li><a href="/@culture/Account/Logout"><i class="fa fa-lock-open"></i>  @_loc["Logout"]</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li><a href="/@culture/account/@User.Identity.Name"><i class="fa fa-user"></i> Tài khoản</a></li>
+                                        <li><a href="/@culture/bill/@User.Identity.Name"><i class="fa fa-user"></i> @_loc["Bill"]</a></li>
+                                        <li><a href="/@culture/Checkout/Index"><i class="fa fa-crosshairs"></i> @_loc["Checkout"]</a></li>
+                                        <li><a href="/@culture/Cart/Index"><i class="fa fa-shopping-cart"></i>  @_loc["Cart"] [ <span id="lbl_number_items_header">0</span> ] </a></li>
+                                        <li><a href="/@culture/Account/Logout"><i class="fa fa-lock-open"></i>  @_loc["Logout"]</a></li>
+                                    }
                                 }
                                 else
                                 {
@@ -142,7 +149,17 @@
                                 <span class="icon-bar"></span>
                             </button>
                         </div>
-                        
+                        <div class="mainmenu pull-left">
+                            <ul class="nav navbar-nav collapse navbar-collapse topMenu">
+                                <li><a class="active" href="/" localize-content>Home</a></li>
+                                <li>
+                                    <a href="/@culture/Product/Index" localize-content>Product</a>
+                                </li>
+
+                                <li><a href="404.html">404</a></li>
+                                <li><a href="contact-us.html">Contact</a></li>
+                            </ul>
+                        </div>
                     </div>
                     <div class="col-sm-3">
                         <div class="search_box pull-right">

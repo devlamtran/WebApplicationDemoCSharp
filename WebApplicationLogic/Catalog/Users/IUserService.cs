@@ -28,6 +28,6 @@ namespace WebApplicationLogic.Catalog.Users
         Task<bool> Delete(string id);
         
         Task<bool> RoleAssign(String id, RoleAssignRequest request);
-       
+        Task<bool> ResetPassword(ResetPasswordViewModel request);
     }
 }

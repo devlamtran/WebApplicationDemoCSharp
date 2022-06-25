@@ -78,11 +78,19 @@ namespace WebApplication
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
              .AddCookie(options =>
              {
-                 
+
                  options.LoginPath = "/Account/Login";
                  options.AccessDeniedPath = "/Account/AccessDenied";
              });
-            
+            //services.AddAuthorization(options =>
+            //{
+            //    options.AddPolicy("UserOnly", policy =>{ 
+            //        policy.RequireClaim("USER");
+            //        policy.RequireUserName("");
+            //    });
+            //});
+
+
 
 
             services.AddSession(options =>
@@ -110,9 +118,11 @@ namespace WebApplication
 
             services.AddControllers()
                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());
+            services.AddControllers()
+               .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<RegisterRequestValidator>());
+            services.AddControllers()
+               .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<ResetPassRequestValidator>());
 
-
-            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -179,6 +189,7 @@ namespace WebApplication
                       controller = "Checkout",
                       action = "Bill"
                   });
+                
                 endpoints.MapControllerRoute(
                   name: "Account Detail Vn",
                   pattern: "{culture}/account/{userName?}", new
@@ -186,6 +197,13 @@ namespace WebApplication
                       controller = "User",
                       action = "Edit"
                   });
+                endpoints.MapControllerRoute(
+                 name: "Pass Detail Vn",
+                 pattern: "{culture}/accountKey/{userName?}", new
+                 {
+                     controller = "User",
+                     action = "EditKey"
+                 });
 
                 endpoints.MapControllerRoute(
                    name: "default",

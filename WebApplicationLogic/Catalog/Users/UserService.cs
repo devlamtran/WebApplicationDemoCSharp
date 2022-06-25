@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -206,19 +207,21 @@ namespace WebApplicationLogic.Catalog.Users
 
         public async Task<bool> Update(UserUpdateRequest request)
         {
-           
             var user = await _userManager.FindByIdAsync(request.Id);
+            
             user.Dob = request.Dob;
             user.Email = request.Email;
             user.FirstName = request.FirstName;
             user.LastName = request.LastName;
             user.PhoneNumber = request.PhoneNumber;
+            user.UserName = request.UserName;
 
             var result = await _userManager.UpdateAsync(user);
             if (result.Succeeded)
             {
                 return true;
             }
+           
             return false;
         }
 
@@ -249,6 +252,20 @@ namespace WebApplicationLogic.Catalog.Users
             return true;
         }
 
-       
+        public async Task<bool> ResetPassword(ResetPasswordViewModel request)
+        {
+            var user = await _userManager.FindByEmailAsync(request.Email);
+            if (user == null)
+            {
+
+                return false;
+            }
+            var resetPassResult = await _userManager.ChangePasswordAsync(user,request.OldPassword,request.Password);
+            if (!resetPassResult.Succeeded)
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }

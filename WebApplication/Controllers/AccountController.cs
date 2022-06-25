@@ -132,44 +132,9 @@ namespace WebApplication.Controllers
             return principal;
         }
 
-        [HttpGet]
-        public IActionResult Logout()
-        {
-            _userService.Logout();
-            return RedirectToAction("Index", "Home");
-        }
+       
 
-        [HttpGet]
-        public IActionResult Register()
-        {
-            if (_signInManager.IsSignedIn(User))
-            {
-                return RedirectToAction("Index", "Home");
-            }
-            return View();
-        }
-        [HttpPost]
-        [AllowAnonymous]
-        public async Task<IActionResult> Register(RegisterRequest registerRequest)
-        {
-            if (!ModelState.IsValid)
-            {
-                
-                return View(registerRequest);
-            }
-
-            var result = await _userService.Register(registerRequest);
-            if (!result)
-            {
-               
-                return View(registerRequest);
-
-            }
-            
-
-            return RedirectToAction("Index", "Home");
-            
-        }
+        
         [AllowAnonymous]
         public IActionResult ResetPassword(string token, string email)
         {

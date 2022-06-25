@@ -17,18 +17,11 @@
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <a asp-action="Index" asp-controller="User" class="m-0 font-weight-bold text-primary btn-success"> Về Danh sách User </a>
+            <a asp-action="Index" asp-controller="UserAdmin" class="m-0 font-weight-bold text-primary btn-success"> Về Danh sách User </a>
         </div>
         <div class="card-body">
             <h4>UserDeleteRequest</h4>
-            <dl class="row">
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Id)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Id)
-                </dd>
-            </dl>
+            
 
             <form asp-action="Delete">
                 <input type="submit" value="Delete" class="btn btn-danger" /> |

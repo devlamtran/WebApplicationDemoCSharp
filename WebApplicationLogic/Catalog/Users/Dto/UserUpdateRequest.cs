@@ -26,5 +26,8 @@ namespace WebApplicationLogic.Catalog.Users.Dto
 
         [Display(Name = "Số điện thoại")]
         public string PhoneNumber { get; set; }
+
+        [Display(Name = "Số điện thoại")]
+        public string UserName { get; set; }
     }
 }
