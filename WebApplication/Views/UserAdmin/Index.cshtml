@@ -1,14 +1,17 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-
 @{
-    var culture = CultureInfo.CurrentCulture.Name;
+    ViewBag.Title = "IndexAdminUser";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    var culture = CultureInfo.CurrentCulture.Name;
 
 }
 @using WebApplicationLogic.Dtos
-@model PageResult<WebApplicationLogic.Catalog.Products.Dto.ProductViewModel>
+@model PageResult<WebApplicationLogic.Catalog.Users.Dto.UserViewModel>
+
+
+
 
 
 
@@ -17,7 +20,7 @@
 <div class="container-fluid">
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Danh sách Sản phẩm</h1>
+    <h1 class="h3 mb-2 text-gray-800">Danh sách User</h1>
     <p class="mb-4">
         DataTables is a third party plugin that is used to generate the demo table below.
         For more information about DataTables, please visit the <a target="_blank"
@@ -27,21 +30,17 @@
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <a asp-action="Create" asp-controller="ProductAdmin" class="m-0 font-weight-bold text-primary btn-success"> Tạo mới sản phẩm</a>
+            <a asp-action="Create" asp-controller="UserAdmin" class="m-0 font-weight-bold text-primary btn-success"> Tạo mới </a>
             <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" asp-action="Index" method="get">
                 <div class="input-group">
-                    <input name="keyword" onchange="this.form.submit()" type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                    <input name="keyword" type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
                            aria-label="Search" aria-describedby="basic-addon2">
-                    <select name="categoryId" onchange="this.form.submit()" asp-items="@ViewBag.Categories" class="form-control">
-                        <option>--Chọn danh mục--</option>
-                    </select>
                     <div class="input-group-append">
                         <button class="btn btn-primary" type="button">
                             <i class="fas fa-search fa-sm"></i>
                         </button>
                     </div>
                 </div>
-
             </form>
         </div>
         <div class="card-body">
@@ -50,21 +49,22 @@
                     <thead>
                         <tr>
 
-                            <th>Hình SP</th>
                             <th>Tên</th>
-                            <th>Giá nhập</th>
-                            <th>Giá bán</th>
-                            <th>Số lượng</th>
+                            <th>Họ</th>
+                            <th>Số điện thoại</th>
+                            <th>Tài khoản</th>
+                            <th>Email</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
-                            <th>Hình SP</th>
+
                             <th>Tên</th>
-                            <th>Giá nhập</th>
-                            <th>Giá bán</th>
-                            <th>Số lượng</th>
+                            <th>Họ</th>
+                            <th>Số điện thoại</th>
+                            <th>Tài khoản</th>
+                            <th>Email</th>
                             <th>Action</th>
                         </tr>
                     </tfoot>
@@ -73,20 +73,15 @@
                         {
                             <tr>
 
-                                <td><img width="80" src="/@Html.DisplayFor(modelItem => item.ThumbnailImage)" alt=""></td>
-                                <td>@Html.DisplayFor(modelItem => item.Name) </td>
-                                @{
-                                    string OriginalPrice = item.OriginalPrice.ToString("#,###", new CultureInfo("vi-vn")) + " đ";
-                                    string Price = item.Price.ToString("#,###", new CultureInfo("vi-vn")) + " đ";
-
-                                }
-                                <td>@Html.DisplayFor(modelItem => OriginalPrice)</td>
-                                <td>@Html.DisplayFor(modelItem => Price)</td>
-                                <td>@Html.DisplayFor(modelItem => item.ViewCount)</td>
+                                <td>@Html.DisplayFor(modelItem => item.FirstName)</td>
+                                <td>@Html.DisplayFor(modelItem => item.LastName) </td>
+                                <td>@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
+                                <td>@Html.DisplayFor(modelItem => item.UserName)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Email)</td>
                                 <td>
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <form action="/@culture/ProductAdmin/Delete/@Html.DisplayFor(modelItem => item.Id)">
+                                            <form action="/@culture/UserAdmin/Delete/@Html.DisplayFor(modelItem => item.Id)">
 
                                                 <input type="submit" value="Delete" class="btn btn-danger" />
                                             </form>
@@ -94,21 +89,15 @@
                                         </div>
                                         |
                                         <div class="col-md-4">
-                                            <form action="/@culture/ProductAdmin/Edit/@Html.DisplayFor(modelItem => item.Id)">
+                                            <form action="/@culture/UserAdmin/RoleAssign/@Html.DisplayFor(modelItem => item.Id)">
 
-                                                <input type="submit" value="Update" class="btn btn-warning" />
+                                                <input type="submit" value="Gán quyền" class="btn btn-primary" />
                                             </form>
 
                                         </div>
-                                        |
-                                        <div class="col-md-1">
-                                            <form action="/@culture/ProductAdmin/CategoryAssign/@Html.DisplayFor(modelItem => item.Id)">
 
-                                                <input type="submit" value="Assign" class="btn btn-primary" />
-                                            </form>
-                                        </div>
                                     </div>
-
+                                    
                                 </td>
 
                             </tr>

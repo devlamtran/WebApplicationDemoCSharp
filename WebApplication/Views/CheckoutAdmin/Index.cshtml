@@ -4,6 +4,7 @@
 @{
     ViewBag.Title = "IndexAdminUser";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    var culture = CultureInfo.CurrentCulture.Name;
 
 }
 @using WebApplicationLogic.Dtos
@@ -13,7 +14,7 @@
 <div class="container-fluid">
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Danh sách Hóa đơn</h1>
+    <h1 class="h3 mb-2 text-gray-800">Danh sách Đơn hàng</h1>
     
 
     <!-- DataTales Example -->
@@ -70,8 +71,25 @@
                             <td>@Html.DisplayFor(modelItem => item.OrderDate)</td>
                             <td>@Html.DisplayFor(modelItem => item.Status)</td>
                             <td>
-                                @Html.ActionLink("Xóa", "Delete", new { id = item.Id }) |
-                                @Html.ActionLink("xem đơn hàng", "Details", new { id = item.Id })
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <form action="/@culture/CheckoutAdmin/Delete/@Html.DisplayFor(modelItem => item.Id)">
+
+                                            <input type="submit" value="Delete" class="btn btn-danger" />
+                                        </form>
+
+                                    </div>
+                                    |
+                                    <div class="col-md-4">
+                                        <form action="/@culture/CheckoutAdmin/Details/@Html.DisplayFor(modelItem => item.Id)">
+
+                                            <input type="submit" value="Details" class="btn btn-primary" />
+                                        </form>
+
+                                    </div>
+
+                                </div>
+                               
                             </td>
 
                         </tr>

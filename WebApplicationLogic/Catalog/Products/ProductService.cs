@@ -49,9 +49,7 @@ namespace WebApplicationLogic.Catalog.Products
                         Name = request.Name,
                         Description = request.Description,
                         Details = request.Details,
-                        SeoDescription = request.SeoDescription,
                         SeoAlias = request.SeoAlias,
-                        SeoTitle = request.SeoTitle,
                         LanguageId = request.LanguageId,
                         Brand = request.Brand
                     });
@@ -77,6 +75,7 @@ namespace WebApplicationLogic.Catalog.Products
                 ViewCount = 0,
                 DateCreated = DateTime.Now,
                 ProductTranslations = translations,
+                IsFeatured = (bool)request.IsFeatured
                 
             };
             //Save image
@@ -272,7 +271,8 @@ namespace WebApplicationLogic.Catalog.Products
                 ViewCount = product.ViewCount,
                 Categories = categories,
                 Brand = productTranslation.Brand,
-                ThumbnailImage = image != null ? image.ImagePath : "no-image.jpg"
+                ThumbnailImage = image != null ? image.ImagePath : "no-image.jpg",
+                IsFeatured = product.IsFeatured
             };
             return productViewModel;
         }
@@ -411,11 +411,10 @@ namespace WebApplicationLogic.Catalog.Products
             product.Price = request.Price;
             product.OriginalPrice = request.OriginalPrice;
             productTranslations.SeoAlias = request.SeoAlias;
-            productTranslations.SeoDescription = request.SeoDescription;
-            productTranslations.SeoTitle = request.SeoTitle;
             productTranslations.Description = request.Description;
             productTranslations.Details = request.Details;
-
+            productTranslations.LanguageId = request.LanguageId;
+            product.IsFeatured = (bool)request.IsFeatured;
             //Save image
             if (request.ThumbnailImage != null)
             {

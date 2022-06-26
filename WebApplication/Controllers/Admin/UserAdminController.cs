@@ -63,43 +63,6 @@ namespace WebApplication.Controllers.Admin
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(string id)
-        {
-            var result = await _userService.GetById(id);
-            if (result!=null)
-            {
-                var user = result;
-                var updateRequest = new UserUpdateRequest()
-                {
-                    Dob = user.Dob,
-                    Email = user.Email,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    PhoneNumber = user.PhoneNumber,
-                    Id = id
-                };
-                return View(updateRequest);
-            }
-            return RedirectToAction("Error", "Home");
-        }
-        [HttpPost]
-        public async Task<IActionResult> Edit(UserUpdateRequest request)
-        {
-            if (!ModelState.IsValid)
-                return View();
-
-            var result = await _userService.Update(request);
-            if (result)
-            {
-                //TempData["result"] = "Cập nhật người dùng thành công";
-                return RedirectToAction("Index");
-            }
-
-            //ModelState.AddModelError("", result.Message);
-            return View(request);
-        }
-
-        [HttpGet]
         public IActionResult Delete(string id)
         {
             return View(new UserDeleteRequest()

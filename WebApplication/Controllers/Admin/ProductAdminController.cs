@@ -151,6 +151,7 @@ namespace WebApplication.Controllers.Admin
                 Brand = product.Brand,
                 LanguageId = product.LanguageId,
                 IsFeatured = product.IsFeatured,
+              
                
             };
             return View(editVm);

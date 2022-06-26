@@ -16,12 +16,12 @@
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            
+
             <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" asp-action="Details" method="get">
                 <div class="input-group">
                     <input name="keyword" onchange="this.form.submit()" type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
                            aria-label="Search" aria-describedby="basic-addon2">
-                   
+
                     <div class="input-group-append">
                         <button class="btn btn-primary" type="button">
                             <i class="fas fa-search fa-sm"></i>
@@ -38,10 +38,10 @@
                         <tr>
 
                             <th>Hình SP</th>
-                            <th>Tên</th>                          
+                            <th>Tên</th>
                             <th>Giá</th>
                             <th>Số lượng</th>
-                            
+                            <th>Tổng giá</th>
                         </tr>
                     </thead>
                     <tfoot>
@@ -50,26 +50,41 @@
                             <th>Tên</th>
                             <th>Giá</th>
                             <th>Số lượng</th>
-                            
+                            <th>Tổng giá</th>
                         </tr>
                     </tfoot>
                     <tbody>
+                        @{
+                            decimal priceOrder = 0;
+                        }
                         @foreach (var item in Model.Items)
                         {
                             <tr>
+                                @{
 
+                                    string Price = item.Price.ToString("#,###", new CultureInfo("vi-vn")) + " đ";
+                                    decimal TotalPrice = item.Price * item.Quantity;
+                                    priceOrder += TotalPrice;
+                                    string TotalPriceItem = TotalPrice.ToString("#,###", new CultureInfo("vi-vn")) + " đ";
+
+                                }
                                 <td><img width="80" src="/@Html.DisplayFor(modelItem => item.Image)" alt=""></td>
                                 <td>@Html.DisplayFor(modelItem => item.Name) </td>
-                                <td>@Html.DisplayFor(modelItem => item.Price)</td>
+                                <td>@Html.DisplayFor(modelItem => Price)</td>
                                 <td>@Html.DisplayFor(modelItem => item.Quantity)</td>
-                               
+                                <td>@Html.DisplayFor(modelItem => TotalPriceItem)</td>
 
                             </tr>
                         }
                     </tbody>
                 </table>
+
+
             </div>
             @await Component.InvokeAsync("PagerAdmin", Model)
+        </div>
+        <div class="form-group">
+            <label style="text-align:left" class="control-label">Tổng giá đơn hàng:</label>  <span class="text-danger">@priceOrder.ToString("#,###", new CultureInfo("vi-vn")) đ </span>
         </div>
     </div>
 

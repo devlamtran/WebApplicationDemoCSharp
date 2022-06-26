@@ -4,6 +4,7 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    var culture = CultureInfo.CurrentCulture.Name;
 }
 
 <div class="container-fluid">
@@ -62,8 +63,24 @@
                                 
 
                                 <td>
-                                    @Html.ActionLink("Chỉnh", "Edit", new { id = item.Id })|
-                                    @Html.ActionLink("Xóa", "Delete", new { id = item.Id })
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <form action="/@culture/CategoryAdmin/Delete/@Html.DisplayFor(modelItem => item.Id)">
+
+                                                <input type="submit" value="Delete" class="btn btn-danger" />
+                                            </form>
+
+                                        </div>
+                                        |
+                                        <div class="col-md-2">
+                                            <form action="/@culture/CategoryAdmin/Edit/@Html.DisplayFor(modelItem => item.Id)">
+
+                                                <input type="submit" value="Update" class="btn btn-warning" />
+                                            </form>
+
+                                        </div>
+
+                                    </div>                                 
 
                                 </td>
 
