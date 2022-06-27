@@ -1,0 +1,54 @@
+﻿@model WebApplicationLogic.Catalog.Contacts.Dto.ContactProcessRequest
+
+@{
+    ViewData["Title"] = "Process";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Xử lý liên hệ</h1>
+    <p class="mb-4">
+        DataTables is a third party plugin that is used to generate the demo table below.
+        For more information about DataTables, please visit the <a target="_blank"
+                                                                   href="https://datatables.net">official DataTables documentation</a>.
+    </p>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <a asp-action="Index" asp-controller="ContactAdmin" class="m-0 font-weight-bold text-primary btn-success"> Về Danh sách Liên hệ </a>
+        </div>
+        <div class="card-body">
+            <div class="col-md-4">
+                <form asp-action="Process" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input asp-for="Id" type="hidden" class="form-control" />
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label">Tên người gửi : @Model.Name</label>
+                    </div>
+                    <input asp-for="Email" type="hidden" class="form-control" />
+
+                    <div class="form-group">
+                        <label asp-for="Message" class="control-label">Nội dung: @Model.Message</label>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Subject" class="control-label">Tiêu đề</label>
+                        <input asp-for="Subject" class="form-control" />
+                        <span asp-validation-for="Subject" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MessageResponse" class="control-label">Phản hồi:</label>
+                        <textarea asp-for="MessageResponse" class="form-control" />
+                        <span asp-validation-for="MessageResponse" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Send" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+

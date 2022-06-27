@@ -1,0 +1,130 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@{
+    var culture = CultureInfo.CurrentCulture.Name;
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+}
+@using WebApplicationLogic.Dtos
+@model PageResult<WebApplicationLogic.Catalog.Contacts.Dto.ContactViewModel>
+
+
+
+
+
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Danh sách Liên hệ</h1>
+    <p class="mb-4">
+        DataTables is a third party plugin that is used to generate the demo table below.
+        For more information about DataTables, please visit the <a target="_blank"
+                                                                   href="https://datatables.net">official DataTables documentation</a>.
+    </p>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            
+            <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" asp-controller="ContactAdmin" asp-action="Index" method="get">
+                <div class="input-group">
+                    <input name="keyword" onchange="this.form.submit()" type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                           aria-label="Search" aria-describedby="basic-addon2">
+                   
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="button">
+                            <i class="fas fa-search fa-sm"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+
+                            <th>Id</th>
+                            <th>Tên</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Message</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Id</th>
+                            <th>Tên</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Message</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @foreach (var item in Model.Items)
+                        {
+                        <tr>
+
+                            <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Name) </td>
+
+                            <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                            <td>@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Message)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Status)</td>
+                            <td>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <form action="/@culture/ContactAdmin/Delete/@Html.DisplayFor(modelItem => item.Id)">
+
+                                            <input type="submit" value="Delete" class="btn btn-danger" />
+                                        </form>
+
+                                    </div>
+                                    |
+                                    <div class="col-md-4">
+                                        <form action="/@culture/ContactAdmin/Process/@Html.DisplayFor(modelItem => item.Id)">
+
+                                            <input type="submit" value="Process" class="btn btn-warning" />
+                                        </form>
+
+                                    </div>
+                                    |
+                                    <div class="col-md-1">
+                                        <form action="/@culture/ContactAdmin/Details/@Html.DisplayFor(modelItem => item.Id)">
+
+                                            <input type="submit" value="Details" class="btn btn-primary" />
+                                        </form>
+                                    </div>
+                                </div>
+
+                            </td>
+
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            @await Component.InvokeAsync("PagerAdmin", Model)
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+

@@ -17,6 +17,7 @@ using WebApplication.LocalizationResources;
 using WebApplicationData.EF;
 using WebApplicationData.Enties;
 using WebApplicationLogic.Catalog.Categories;
+using WebApplicationLogic.Catalog.Contacts;
 using WebApplicationLogic.Catalog.Languages;
 using WebApplicationLogic.Catalog.Products;
 using WebApplicationLogic.Catalog.Roles;
@@ -112,6 +113,7 @@ namespace WebApplication
             services.AddTransient<IValidator<RegisterRequest>, RegisterRequestValidator>();
             services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<ISaleService, SaleService>();
+            services.AddTransient<IContactService, ContactService>();
             services.AddIdentity<User, Role>().AddEntityFrameworkStores<WebApplicationContext>().AddDefaultTokenProviders();
             services.AddDbContext<WebApplicationContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("WebSolutionDb")));

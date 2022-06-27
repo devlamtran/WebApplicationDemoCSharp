@@ -15,7 +15,7 @@ using WebApplicationLogic.Catalog.Users.Dto;
 namespace WebApplication.Controllers
 {
 
-    [Authorize(Roles = "USER")]
+    [Authorize(Roles = "USER,ADMIN")]
     public class UserController : Controller
     {
         private readonly IUserService _userService;
