@@ -185,7 +185,7 @@ namespace WebApplication
                       action = "Detail"
                   });
                 endpoints.MapControllerRoute(
-                  name: "Product Detail Vn",
+                  name: "Product Bill Vn",
                   pattern: "{culture}/bill/{userName?}", new
                   {
                       controller = "Checkout",
@@ -193,19 +193,26 @@ namespace WebApplication
                   });
                 
                 endpoints.MapControllerRoute(
-                  name: "Account Detail Vn",
+                  name: "Account update Vn",
                   pattern: "{culture}/account/{userName?}", new
                   {
                       controller = "User",
                       action = "Edit"
                   });
                 endpoints.MapControllerRoute(
-                 name: "Pass Detail Vn",
+                 name: "Pass update Vn",
                  pattern: "{culture}/accountKey/{userName?}", new
                  {
                      controller = "User",
                      action = "EditKey"
                  });
+                endpoints.MapControllerRoute(
+                name: "Profile Vn",
+                pattern: "{culture}/profile/{userName?}", new
+                {
+                    controller = "User",
+                    action = "Profile"
+                });
 
                 endpoints.MapControllerRoute(
                    name: "default",

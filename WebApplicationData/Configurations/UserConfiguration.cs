@@ -15,6 +15,7 @@ namespace WebApplicationData.Configurations
             builder.Property(x => x.FirstName).IsRequired().HasMaxLength(200);
             builder.Property(x => x.LastName).IsRequired().HasMaxLength(200);
             builder.Property(x => x.Dob).IsRequired();
+            builder.Property(x => x.ImagePath).HasMaxLength(200).IsRequired(false);
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using WebApplicationData.Enties;
+using WebApplicationLogic.Catalog.Products;
 using WebApplicationLogic.Catalog.Roles.Dto;
 using WebApplicationLogic.Catalog.Users.Dto;
 using WebApplicationLogic.Dtos;
@@ -20,15 +23,16 @@ namespace WebApplicationLogic.Catalog.Users
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        private readonly RoleManager<Role> _roleManager;
+        private readonly IStorageService _storageService;
         private readonly IConfiguration _config;
+        private const string USER_CONTENT_FOLDER_NAME = "image-user";
 
 
-        public UserService(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<Role> roleManager, IConfiguration config)
+        public UserService(UserManager<User> userManager, SignInManager<User> signInManager, IStorageService storageService, IConfiguration config)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _roleManager = roleManager;
+            _storageService = storageService;
             _config = config;
         }
        
@@ -215,6 +219,7 @@ namespace WebApplicationLogic.Catalog.Users
             user.LastName = request.LastName;
             user.PhoneNumber = request.PhoneNumber;
             user.UserName = request.UserName;
+            user.ImagePath = await SaveFile(request.ImagePath);
 
             var result = await _userManager.UpdateAsync(user);
             if (result.Succeeded)
@@ -266,6 +271,15 @@ namespace WebApplicationLogic.Catalog.Users
                 return false;
             }
             return true;
+        }
+
+        private async Task<string> SaveFile(IFormFile file)
+        {
+            var originalFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+            var fileName = $"{Guid.NewGuid()}{Path.GetExtension(originalFileName)}";
+            await _storageService.SaveFileAsync(file.OpenReadStream(), fileName);
+            return USER_CONTENT_FOLDER_NAME + "/" + fileName;
+
         }
     }
 }

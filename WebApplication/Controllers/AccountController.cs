@@ -205,13 +205,7 @@ namespace WebApplication.Controllers
         {
             return View();
         }
-
-        [HttpGet]
-        public IActionResult Profile()
-        {
-
-            return View();
-        }
+       
 
         [HttpGet("/Account/AccessDenied")]
         public IActionResult Forbidden()

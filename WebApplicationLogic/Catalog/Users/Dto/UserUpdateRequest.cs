@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -29,5 +30,11 @@ namespace WebApplicationLogic.Catalog.Users.Dto
 
         [Display(Name = "Số điện thoại")]
         public string UserName { get; set; }
+
+        [Display(Name = "Hình profile")]
+        public IFormFile ImagePath { get; set; }
+
+        public string Image { get; set; }
+
     }
 }

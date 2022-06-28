@@ -422,7 +422,7 @@ namespace WebApplicationLogic.Catalog.Products
                 if (thumbnailImage != null)
                 {
                     thumbnailImage.FileSize = request.ThumbnailImage.Length;
-                    thumbnailImage.ImagePath = await this.SaveFile(request.ThumbnailImage);
+                    thumbnailImage.ImagePath = await SaveFile(request.ThumbnailImage);
                     _context.ProductImages.Update(thumbnailImage);
                 }
             }

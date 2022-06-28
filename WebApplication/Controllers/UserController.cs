@@ -51,7 +51,9 @@ namespace WebApplication.Controllers
                     Email = user.Email,
                     FirstName = user.FirstName,
                     LastName = user.LastName,
-                    PhoneNumber = user.PhoneNumber
+                    PhoneNumber = user.PhoneNumber,
+                    UserName = user.UserName,
+                    Image = user.ImagePath
                     
                 };
                 return View(updateRequest);
@@ -68,8 +70,8 @@ namespace WebApplication.Controllers
             var result = await _userService.Update(request);
             if (result)
             {
-                _userService.Logout();
-                return RedirectToAction("Index","Home");
+               // _userService.Logout();
+                return View(request);
             }
 
            
@@ -117,6 +119,13 @@ namespace WebApplication.Controllers
 
 
             return View(request);
+        }
+
+        [HttpGet]
+        public IActionResult Profile()
+        {
+
+            return View();
         }
     }
 }

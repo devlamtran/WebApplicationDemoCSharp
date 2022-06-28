@@ -13,6 +13,8 @@ namespace WebApplicationData.Enties
 
         public DateTime Dob { get; set; }
 
+        public string ImagePath { get; set; }
+
         public List<Cart> Carts { get; set; }
 
         public List<Order> Orders { get; set; }

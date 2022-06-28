@@ -108,16 +108,15 @@
                                     @if (User.IsInRole("ADMIN"))
                                     {
                                         <li><a href="/@culture/Admin/Index">Admin</a></li>
-                                        <li><a href="/@culture/bill/@User.Identity.Name"><i class="fa fa-first-order"></i> @_loc["Bill"]</a></li>
-                                        <li><a href="/@culture/Checkout/Index"><i class="fa fa-crosshairs"></i> @_loc["Checkout"]</a></li>
+                                        <li><a href="/@culture/profile/@User.Identity.Name"><i class="fa fa-user"></i>  @_loc["Profile"] [ <span id="lbl_number_items_header">0</span> ] </a></li>
+
                                         <li><a href="/@culture/Cart/Index"><i class="fa fa-shopping-cart"></i>  @_loc["Cart"] [ <span id="lbl_number_items_header">0</span> ] </a></li>
                                         <li><a href="/@culture/AccountRegister/Logout"><i class="fa fa-lock-open"></i>  @_loc["Logout"]</a></li>
                                     }
                                     else
                                     {
-                                        <li><a href="/@culture/accountKey/@User.Identity.Name"><i class="fa fa-key"></i> @_loc["Password"]</a></li>
-                                        <li><a href="/@culture/bill/@User.Identity.Name"><i class="fa fa-user"></i> @_loc["Bill"]</a></li>
-                                        <li><a href="/@culture/Checkout/Index"><i class="fa fa-crosshairs"></i> @_loc["Checkout"]</a></li>
+                                        <li><a href="/@culture/profile/@User.Identity.Name"><i class="fa fa-user"></i>  @_loc["Profile"] [ <span id="lbl_number_items_header">0</span> ] </a></li>
+
                                         <li><a href="/@culture/Cart/Index"><i class="fa fa-shopping-cart"></i>  @_loc["Cart"] [ <span id="lbl_number_items_header">0</span> ] </a></li>
                                         <li><a href="/@culture/Account/Logout"><i class="fa fa-lock-open"></i>  @_loc["Logout"]</a></li>
                                     }
@@ -157,13 +156,24 @@
                                 </li>
 
                                 <li class="dropdown">
-                                    <a href="#"><i class="fa fa-gear"></i>   @_loc["Setting"]</a>
+                                    <a href="#"> @_loc["Orders"] <i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
-                                        <li><a href="/@culture/account/@User.Identity.Name"><i class="fa fa-user"></i>  @_loc["Account"]</a></li>
-                                        <li><a href="/@culture/accountKey/@User.Identity.Name"><i class="fa fa-key"></i>  @_loc["Password"]</a></li>
-                                        
+                                        <li><a href="/@culture/bill/@User.Identity.Name"> @_loc["Bill"]</a></li>
+                                        <li><a href="/@culture/Checkout/Index">@_loc["Checkout"]</a></li>
                                     </ul>
                                 </li>
+                                @if (_signInManager.IsSignedIn(User))
+                                {
+                                    <li class="dropdown">
+                                        <a href="#"><i class="fa fa-gear"></i>   @_loc["Setting"] <i class="fa fa-angle-down"></i></a>
+                                        <ul role="menu" class="sub-menu">
+
+                                            <li><a href="/@culture/account/@User.Identity.Name"><i class="fa fa-user"></i> @_loc["Account"]</a></li>
+                                            <li><a href="/@culture/accountKey/@User.Identity.Name"><i class="fa fa-key"></i> @_loc["Password"]</a></li>
+
+                                        </ul>
+                                    </li>
+                                }
                                 <li><a href="/@culture/Contact/Index">Contact</a></li>
                             </ul>
                         </div>

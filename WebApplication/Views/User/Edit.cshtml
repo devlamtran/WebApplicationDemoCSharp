@@ -8,7 +8,14 @@
 
 
 <h3 class="mb-4">Account Settings</h3>
-<form asp-controller="User" asp-action="Edit" method="post">
+
+<div class="p-4">
+    <div class="img-circle text-center mb-3">
+        <img src="/@Model.Image" alt="Image" class="shadow">
+    </div>
+    <h4 class="text-center">Kiran Acharya</h4>
+</div>
+<form asp-controller="User" asp-action="Edit" enctype="multipart/form-data" method="post">
     <div class="row">
         <input type="hidden" asp-for="Id" />
         <div class="col-md-6">
@@ -49,11 +56,18 @@
             </div>
         </div>
 
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Picture Profile</label>
+                <input type="file" asp-for="ImagePath" class="form-control">
+            </div>
+        </div>
+
 
     </div>
     <div>
         <input type="submit" value="Save" class="btn btn-primary" />
-        <button class="btn btn-light">Cancel</button>
+        <input class="btn btn-light" value="Cancel"/>
     </div>
 </form>
     
