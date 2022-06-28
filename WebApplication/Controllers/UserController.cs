@@ -66,12 +66,24 @@ namespace WebApplication.Controllers
             if (!ModelState.IsValid)
                 return View();
 
-           
+            var user = await _userManager.FindByNameAsync(request.UserName);
             var result = await _userService.Update(request);
             if (result)
             {
-               // _userService.Logout();
-                return View(request);
+                
+                // _userService.Logout();
+                return View(new UserUpdateRequest()
+                {
+                    Id = user.Id,
+                    Dob = user.Dob,
+                    Email = user.Email,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    PhoneNumber = user.PhoneNumber,
+                    UserName = user.UserName,
+                    Image = user.ImagePath
+
+                });
             }
 
            

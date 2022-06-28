@@ -9,6 +9,8 @@ namespace WebApplicationLogic.Catalog.Products
 
         Task SaveFileAsync(Stream mediaBinaryStream, string fileName);
 
+        Task SaveFileUserAsync(Stream mediaBinaryStream, string fileName);
+
         Task DeleteFileAsync(string fileName);
     }
 }

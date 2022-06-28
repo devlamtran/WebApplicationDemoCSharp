@@ -277,7 +277,7 @@ namespace WebApplicationLogic.Catalog.Users
         {
             var originalFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
             var fileName = $"{Guid.NewGuid()}{Path.GetExtension(originalFileName)}";
-            await _storageService.SaveFileAsync(file.OpenReadStream(), fileName);
+            await _storageService.SaveFileUserAsync(file.OpenReadStream(), fileName);
             return USER_CONTENT_FOLDER_NAME + "/" + fileName;
 
         }
