@@ -139,5 +139,11 @@ namespace WebApplication.Controllers
 
             return View();
         }
+        [HttpGet]
+        public async Task<String> GetImage(string userName)
+        {
+            var user = await _userManager.FindByNameAsync(userName);
+            return user.ImagePath;
+        }
     }
 }
