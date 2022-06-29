@@ -49,5 +49,6 @@ namespace WebApplicationLogic.Catalog.Products
          Task<List<ProductViewModel>> GetFeaturedProducts(string languageId, int take);
 
         Task<List<ProductViewModel>> GetLatestProducts(string languageId, int take);
+        Task<PageResult<ProductViewModel>> GetAllFilterPaging(GetProductFilterPagingRequest request);
     }
 }

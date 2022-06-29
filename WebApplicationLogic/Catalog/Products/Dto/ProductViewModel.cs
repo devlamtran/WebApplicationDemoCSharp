@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 
 namespace WebApplicationLogic.Catalog.Products.Dto
@@ -29,6 +30,21 @@ namespace WebApplicationLogic.Catalog.Products.Dto
         public string ThumbnailImage { get; set; }
 
         public List<string> Categories { get; set; } = new List<string>();
+
+        public string ToStringPrice()
+        {
+            CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");   // try with "en-US"
+            string price = Price.ToString("#,###", cul.NumberFormat);
+
+            return price;
+        }
+        public string ToStringOriginalPrice()
+        {
+            CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");   // try with "en-US"
+            string price = OriginalPrice.ToString("#,###", cul.NumberFormat);
+
+            return price;
+        }
 
     }
 }

@@ -170,18 +170,19 @@
                                         <li><a href="/@culture/Checkout/Index">@_loc["Checkout"]</a></li>
                                     </ul>
                                 </li>
-                                @if (_signInManager.IsSignedIn(User)) {
-                                       <li class="dropdown">
-                                       <a href="#"><i class="fa fa-gear"></i>   @_loc["Setting"] <i class="fa fa-angle-down"></i></a>
-                                          <ul role="menu" class="sub-menu">
+                                @if (_signInManager.IsSignedIn(User))
+                                {
+                                    <li class="dropdown">
+                                        <a href="#"><i class="fa fa-gear"></i>   @_loc["Setting"] <i class="fa fa-angle-down"></i></a>
+                                        <ul role="menu" class="sub-menu">
 
-                                             <li><a href="/@culture/account/@User.Identity.Name"><i class="fa fa-user"></i> @_loc["Account"]</a></li>
-                                             <li><a href="/@culture/accountKey/@User.Identity.Name"><i class="fa fa-key"></i> @_loc["Password"]</a></li>
+                                            <li><a href="/@culture/account/@User.Identity.Name"><i class="fa fa-user"></i> @_loc["Account"]</a></li>
+                                            <li><a href="/@culture/accountKey/@User.Identity.Name"><i class="fa fa-key"></i> @_loc["Password"]</a></li>
 
-                                          </ul>
-                                       </li>
-                                 }
-                                    
+                                        </ul>
+                                    </li>
+                                }
+
                                 <li><a href="/@culture/Contact/Index">Contact</a></li>
                             </ul>
                         </div>
@@ -189,7 +190,7 @@
                     <form class="d-none d-sm-inline-block form-in" asp-controller="Product" asp-action="Index" method="get">
                         <div class="col-sm-3">
                             <div class="search_box pull-right">
-                                <input name="keyword" type="text" placeholder="Search" />
+                                <input name="keyword" oninput="searchByName(this)" value="@ViewBag.KeySearch" type="text" placeholder="Search" />
                             </div>
                         </div>
                     </form>
@@ -382,10 +383,58 @@
     <script src="/js/jquery.prettyPhoto.js"></script>
     <script src="/js/main.js"></script>
     <script src="/js/submit.js"></script>
+    <script src="/js/custom2.js"></script>
     <script src="/js/custom1.js"></script>
     <script>
         var custom = new CustomController();
         custom.initialize();
+    </script>
+    <script type="text/javascript">
+        function searchByName(input) {
+            const culture = $('#hidCulture').val();
+            var categoryId = $('#categoryId').val();
+            var txtSearch = input.value;
+
+            if (categoryId == null) {
+                $.ajax({
+                    type: 'GET',
+                    url: "/" + culture + '/Product/SearchAjax',
+                    data: {
+                        "keyword": txtSearch,
+                        "languageId": culture,
+
+                    },
+                    success: function (result) {
+                        // alert(pageNumber);
+                        $("#body").empty();
+                        $("#body").append("<h2 class='title text-center'>Danh sách sản phẩm</h2>");
+                        $('#body').append(result);
+                    }
+
+                });
+            } else {
+                $.ajax({
+                    type: 'GET',
+                    url: "/" + culture + '/Product/SearchAjax',
+                    data: {
+                        "keyword": txtSearch,
+                        "languageId": culture,
+                        "categoryId": categoryId
+
+                    },
+                    success: function (result) {
+                        // alert(pageNumber);
+                        $("#body").empty();
+                        $("#body").append("<h2 class='title text-center'>Danh sách danh mục sp</h2>");
+                        $('#body').append(result);
+                    }
+
+                });
+
+            }
+
+
+        }
     </script>
 
 

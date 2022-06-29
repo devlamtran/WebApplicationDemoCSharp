@@ -18,8 +18,6 @@ namespace WebApplicationLogic.Catalog.Products
 {
     public class ProductService : IProductService
 
-
-
     {
         private readonly WebApplicationContext _context;
         private readonly IStorageService _storageService;
@@ -531,6 +529,71 @@ namespace WebApplicationLogic.Catalog.Products
             }
             await _context.SaveChangesAsync();
             return true;
+        }
+
+        public async Task<PageResult<ProductViewModel>> GetAllFilterPaging(GetProductFilterPagingRequest request)
+        {
+            var query = from p in _context.Products
+                        join pt in _context.ProductTranslations on p.Id equals pt.ProductId
+                        join pic in _context.ProductInCategories on p.Id equals pic.ProductId into ppic
+                        from pic in ppic.DefaultIfEmpty()
+                        join c in _context.Categories on pic.CategoryId equals c.Id into picc
+                        from c in picc.DefaultIfEmpty()
+                        join pi in _context.ProductImages on p.Id equals pi.ProductId into ppi
+                        from pi in ppi.DefaultIfEmpty()
+                        where pt.LanguageId == request.LanguageId && pi.IsDefault == true
+                        select new { p, pt, pic, pi };
+            //2. filter
+            if (!string.IsNullOrEmpty(request.BrandRange))
+            {
+                if (request.BrandRange != "All")
+                {
+                    query = query.Where(x => x.pt.Brand.Contains(request.BrandRange));
+                }
+                
+            }
+            if (request.PriceRange != 0)
+            {
+                query = query.Where(p => p.p.Price <= request.PriceRange);
+            }
+            if (request.CategoryId != null && request.CategoryId != 0)
+            {
+                query = query.Where(p => p.pic.CategoryId == request.CategoryId);
+            }
+
+            //3. Paging
+            int totalRow = await query.CountAsync();
+
+            var data = await query.Skip((request.PageIndex - 1) * request.PageSize)
+                .Take(request.PageSize)
+                .Select(x => new ProductViewModel()
+                {
+                    Id = x.p.Id,
+                    Name = x.pt.Name,
+                    DateCreated = x.p.DateCreated,
+                    Description = x.pt.Description,
+                    Details = x.pt.Details,
+                    LanguageId = x.pt.LanguageId,
+                    OriginalPrice = x.p.OriginalPrice,
+                    Price = x.p.Price,
+                    SeoAlias = x.pt.SeoAlias,
+                    SeoDescription = x.pt.SeoDescription,
+                    SeoTitle = x.pt.SeoTitle,
+                    Stock = x.p.Stock,
+                    ViewCount = x.p.ViewCount,
+                    ThumbnailImage = x.pi.ImagePath
+
+                }).ToListAsync();
+
+            //4. Select and projection
+            var pageResult = new PageResult<ProductViewModel>()
+            {
+                TotalRecord = totalRow,
+                PageSize = request.PageSize,
+                PageIndex = request.PageIndex,
+                Items = data
+            };
+            return pageResult;
         }
     }
 }

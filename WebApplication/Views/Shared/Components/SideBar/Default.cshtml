@@ -14,21 +14,21 @@
         }
         @foreach (var parent in parents)
         {
-            
-           
-            
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a  data-parent="#accordian" href="/@culture/@_loc["categoryUrl"]/@parent.Id">
-                              
-                                @parent.Name
-                            </a>
-                        </h4>
-                    </div>
-                    
+
+
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-parent="#accordian" href="/@culture/@_loc["categoryUrl"]/@parent.Id">
+
+                            @parent.Name
+                        </a>
+                    </h4>
                 </div>
-                
+
+            </div>
+
 
         }
         <!--category-productsr-->
@@ -36,8 +36,78 @@
 
 
     </div><!--/category-products-->
-
-    
+    <div class="brands_products" id="myFormPrice">
+        <!--brands_products-->
+        <h2>Giá</h2>
+        <div class="brands-name">
+            <ul class="nav nav-pills nav-stacked">
+                <li>
+                    <input type="radio" class="custom-control-input buttonPrice" value="0" name="priceRange" checked id="price-all">
+                    <label class="custom-control-label" for="price-all">All Price</label>
+                    <span class="badge border font-weight-normal">All</span>
+                </li>
+                <li>
+                    <input type="radio" class="custom-control-input buttonPrice" value="10000000" name="priceRange" id="price-all">
+                    <label class="custom-control-label" for="price-all">10000000</label>
+                    <span class="badge border font-weight-normal">10000000</span>
+                </li>
+                <li>
+                    <input type="radio" class="custom-control-input buttonPrice" value="20000000" name="priceRange" id="price-all">
+                    <label class="custom-control-label" for="price-all">20000000</label>
+                    <span class="badge border font-weight-normal">20000000</span>
+                </li>
+                <li>
+                    <input type="radio" class="custom-control-input buttonPrice" value="30000000" name="priceRange" id="price-all">
+                    <label class="custom-control-label" for="price-all">30000000</label>
+                    <span class="badge border font-weight-normal">30000000</span>
+                </li>
+                <li>
+                    <input type="radio" class="custom-control-input buttonPrice" value="40000000" name="priceRange" id="price-all">
+                    <label class="custom-control-label" for="price-all">40000000</label>
+                    <span class="badge border font-weight-normal">40000000</span>
+                </li>
+                <li>
+                    <input type="radio" class="custom-control-input buttonPrice" value="50000000" name="priceRange" id="price-all">
+                    <label class="custom-control-label" for="price-all">50000000</label>
+                    <span class="badge border font-weight-normal">50000000</span>
+                </li>
+                <li>
+                    <input type="radio" class="custom-control-input buttonPrice" value="60000000" name="priceRange" id="price-all">
+                    <label class="custom-control-label" for="price-all">All Price</label>
+                    <span class="badge border font-weight-normal">60000000</span>
+                </li>
+            </ul>
+        </div>
+    </div><!--/brands_products-->
+    <div class="brands_products" id="myFormBrand">
+        <!--brands_products-->
+        <h2>Hãng</h2>
+        <div class="brands-name">
+            <ul class="nav nav-pills nav-stacked">
+                <li>
+                    <input type="radio" class="custom-control-input buttonBrand" value="All" name="brandRange" checked id="price-all">
+                    <label class="custom-control-label" for="price-all">All Brand</label>
+                    <span class="badge border font-weight-normal">All</span>
+                </li>
+                <li>
+                    <input type="radio" class="custom-control-input buttonBrand" value="HP" name="brandRange" id="price-all">
+                    <label class="custom-control-label" for="price-all">HP</label>
+                    <span class="badge border font-weight-normal">10000000</span>
+                </li>
+                <li>
+                    <input type="radio" class="custom-control-input buttonBrand" value="Sam Sung" name="brandRange" id="price-all">
+                    <label class="custom-control-label" for="price-all">Sam Sung</label>
+                    <span class="badge border font-weight-normal">20000000</span>
+                </li>
+                <li>
+                    <input type="radio" class="custom-control-input buttonBrand" value="Asus" name="brandRange" id="price-all">
+                    <label class="custom-control-label" for="price-all">Asus</label>
+                    <span class="badge border font-weight-normal">30000000</span>
+                </li>
+                
+            </ul>
+        </div>
+    </div><!--/brands_products-->
 
     <div class="price-range">
         <!--price-range-->

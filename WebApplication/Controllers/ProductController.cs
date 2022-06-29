@@ -23,7 +23,7 @@ namespace WebApplication.Controllers
 
         public async Task<IActionResult> Index(string keyword, int? categoryId, int page = 1, int pageSize = 6)
         {
-           
+
 
             var request = new GetManageProductPagingRequest()
             {
@@ -34,21 +34,8 @@ namespace WebApplication.Controllers
                 CategoryId = categoryId
             };
             var data = await _productService.GetAllPaging(request);
-            //ViewBag.Keyword = keyword;
+            ViewBag.KeySearch = keyword;
 
-            var categories = await _categoryService.GetAll("vi");
-            ViewBag.Categories = categories.Select(x => new SelectListItem()
-            {
-                Text = x.Name,
-                Value = x.Id.ToString(),
-                Selected = categoryId.HasValue && categoryId.Value == x.Id
-            });
-
-            //if (TempData["result"] != null)
-            //{
-            //    ViewBag.SuccessMsg = TempData["result"];
-            //}
-            //Console.WriteLine(data.Items[0].Name);
             return View(data);
         }
         public async Task<IActionResult> Detail(int id, string culture)
@@ -91,8 +78,91 @@ namespace WebApplication.Controllers
             {
                 Category = await _categoryService.GetById(culture, id),
                 Products = products
-            }); ;
+            });
         }
+        [HttpGet]
+        public async Task<string> SearchAjax(string keyword, int? categoryId, string languageId)
+        {
+            string html = "";
+            var request = new GetManageProductPagingRequest()
+            {
+                KeyWord = keyword,
+                PageIndex = 1,
+                PageSize = 6,
+                LanguageId = languageId,
+                CategoryId = categoryId
+            };
+            var data = await _productService.GetAllPaging(request);
+
+            foreach (ProductViewModel p in data.Items)
+            {
+                html += "<div class='col-sm-4'>"
+                + "<div class='product-image-wrapper'>"
+                + "<div class='single-products'>"
+                   + "<div class='productinfo text-center'> "
+                     + " <img src = '/" + p.ThumbnailImage + "' alt='" + p.Name + "' />"
+                      + "  <h2>" + p.ToStringPrice() + "đ</h2>"
+                       + " <p>" + p.Name + "</p>"
+                       + " <a href = '' class='btn btn-default add-to-cart' data-id='" + p.Id + "' data-culture= 'vi'><i class='fa fa-shopping-cart'></i>Add to cart</a>"
+
+                   + " </div>"
+
+               + " </div>"
+               + " <div class='choose'>"
+                 + "   <ul class='nav nav-pills nav-justified'>"
+                  + "  <li><a href = '/vi/Product/Detail/" + p.Id + "'><i class='fa fa-plus-square'></i>Detail</a></li>"
+                    + "  <li><a href = '' ><i class='fa fa-plus-square'></i>Add to compare</a></li>"
+                   + " </ul>"
+                + "</div>"
+            + "</div>"
+        + "</div>";
+            }
+
+            return html;
+        }
+        [HttpGet]
+        public async Task<string> FilterPriceBrandProductAjax(int categoryId, decimal priceRange, string brandRange, string languageId)
+        {
+            string html = "";
+            var request = new GetProductFilterPagingRequest()
+            {
+                CategoryId = categoryId,
+                PriceRange = priceRange,
+                BrandRange = brandRange,
+                PageIndex = 1,
+                PageSize = 6,
+                LanguageId = languageId
+
+            };
+            var data = await _productService.GetAllFilterPaging(request);
+
+            foreach (ProductViewModel p in data.Items)
+            {
+                html += "<div class='col-sm-4'>"
+                + "<div class='product-image-wrapper'>"
+                + "<div class='single-products'>"
+                   + "<div class='productinfo text-center'> "
+                     + " <img src = '/" + p.ThumbnailImage + "' alt='" + p.Name + "' />"
+                      + "  <h2>" + p.ToStringPrice() + "đ</h2>"
+                       + " <p>" + p.Name + "</p>"
+                       + " <a href = '' class='btn btn-default add-to-cart' data-id='" + p.Id + "' data-culture= 'vi'><i class='fa fa-shopping-cart'></i>Add to cart</a>"
+
+                   + " </div>"
+
+               + " </div>"
+               + " <div class='choose'>"
+                 + "   <ul class='nav nav-pills nav-justified'>"
+                  + "  <li><a href = '/vi/Product/Detail/" + p.Id + "'><i class='fa fa-plus-square'></i>Detail</a></li>"
+                    + "  <li><a href = '' ><i class='fa fa-plus-square'></i>Add to compare</a></li>"
+                   + " </ul>"
+                + "</div>"
+            + "</div>"
+        + "</div>";
+            }
+
+            return html;
+        }
+
     }
-       
+
 }

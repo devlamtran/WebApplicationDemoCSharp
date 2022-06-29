@@ -12,7 +12,9 @@
    
 }
 
-<div class="features_items">
+<div class="features_items" id="body">
+    <input type="hidden" id="hidCulture" value="@culture" />
+    <input type="hidden" id="categoryId" value="@Model.Category.Id" />
     <!--features_items-->
     <h2 class="title text-center">@Model.Category.Name</h2>
     @for (int i = 0; i < Model.Products.Items.Count; i++)
@@ -43,6 +45,6 @@
 
     @await Component.InvokeAsync("Pager", Model.Products)
 
-    
+
 
 </div><!--features_items-->

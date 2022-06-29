@@ -1,9 +1,8 @@
 ﻿$(document).ready(function (e) {
-
+    
     $('input#submitButton').click(function () {
         const culture = $('#hidCulture').val();
         var userName = $('#userName').val();
-        var fdata = new FormData();
         var form = $('#myForm')[0];
         var data = new FormData(form);
         
@@ -21,7 +20,7 @@
         });
 
         $("#image").show("fast", function () {
-            // Which anchor is being used?
+            
             const culture = $('#hidCulture').val();
             var userName = $('#userName').val();
             $.ajax({
@@ -29,7 +28,7 @@
                 type: 'GET',
                 data: userName,
                 success: function (data) {
-                    $(this).attr('src', "/"+data);
+                    $(this).attr('src', "/" + data);
                 }
             });
         });
