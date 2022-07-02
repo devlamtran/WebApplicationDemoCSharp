@@ -31,6 +31,24 @@ namespace WebApplicationLogic.Catalog.Contacts
             return await _context.SaveChangesAsync();
         }
 
+        public List<ContactViewModel> GetAllContact()
+        {
+            var listContactViewModel = new List<ContactViewModel>();
+            var contacts = _context.Contacts.OrderBy(x=>x.Id).ToList();
+            foreach (var contact in contacts )
+            {
+                listContactViewModel.Add(new ContactViewModel() { 
+                         Id = contact.Id,
+                         Name = contact.Name,
+                         PhoneNumber = contact.PhoneNumber,
+                         Email  = contact.Email,
+                         Message = contact.Message,
+                         Status = (int)contact.Status
+                });
+            }
+            return listContactViewModel;
+        }
+
         public async Task<PageResult<ContactViewModel>> GetAllPaging(GetManageContactPagingRequest request)
         {
             var query = from c in _context.Contacts

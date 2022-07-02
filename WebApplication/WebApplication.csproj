@@ -6,7 +6,9 @@
 
   <ItemGroup>
     <PackageReference Include="BraintreeHttp-Dotnet" Version="0.3.0" />
+    <PackageReference Include="ClosedXML" Version="0.96.0" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="10.3.3" />
+    <PackageReference Include="HtmlTextWriter" Version="2.1.1" />
     <PackageReference Include="LazZiya.ExpressLocalization" Version="4.0.4" />
     <PackageReference Include="LazZiya.TagHelpers" Version="4.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.11" />
@@ -19,6 +21,7 @@
     <PackageReference Include="PayPal" Version="1.9.1" />
     <PackageReference Include="PayPalCheckoutSdk" Version="1.0.4" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0" />
+    <PackageReference Include="Uno.UI" Version="4.4.13" />
   </ItemGroup>
 
   <ItemGroup>

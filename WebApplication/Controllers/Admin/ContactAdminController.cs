@@ -1,12 +1,17 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using ClosedXML.Excel;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.IO;
+using System.Text;
 using System.Threading.Tasks;
+using System.Web.UI;
 using WebApplication.Models;
 using WebApplicationLogic.Catalog.Contacts;
 using WebApplicationLogic.Catalog.Contacts.Dto;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace WebApplication.Controllers.Admin
 {
@@ -95,6 +100,56 @@ namespace WebApplication.Controllers.Admin
             }
 
             return View(request);
+
+
+        }
+
+        public IActionResult ExportContentToExcel()
+        {
+            var listContactViewModel = _contactService.GetAllContact();
+            using (var workbook = new XLWorkbook()) {
+                var worksheet = workbook.Worksheets.Add("Contact");
+                var currentRow = 1;
+                worksheet.Cell(currentRow, 1).Value = "Id";
+                worksheet.Cell(currentRow, 2).Value = "Name";
+                worksheet.Cell(currentRow, 3).Value = "Email";
+                worksheet.Cell(currentRow, 4).Value = "PhoneNumber";
+                worksheet.Cell(currentRow, 5).Value = "Message";
+                worksheet.Cell(currentRow, 6).Value = "Status";
+
+                foreach (var contactView in listContactViewModel)
+                {
+                    currentRow++;
+                    worksheet.Cell(currentRow, 1).Value = contactView.Id;
+                    worksheet.Cell(currentRow, 2).Value = contactView.Name;
+                    worksheet.Cell(currentRow, 3).Value = contactView.Email;
+                    worksheet.Cell(currentRow, 4).Value = contactView.PhoneNumber;
+                    worksheet.Cell(currentRow, 5).Value = contactView.Message;
+                    worksheet.Cell(currentRow, 6).Value = contactView.Status;
+                }
+
+                using (var stream = new MemoryStream())
+                {
+                    workbook.SaveAs(stream);
+                    var content = stream.ToArray();
+                    return File(content,"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet","Contact.xlsx");
+                }
+
+            }
+           
+        }
+
+        public IActionResult ExportContentToCSV()
+        {
+            var listContactViewModel = _contactService.GetAllContact();
+            var stringBuilder = new StringBuilder();
+            stringBuilder.AppendLine("");
+
+            foreach (var contactView in listContactViewModel)
+            {
+                stringBuilder.AppendLine($"{ contactView.Id},{contactView.Name},{contactView.Email},{contactView.PhoneNumber},{contactView.Message},{contactView.Status}");
+            }
+            return File(Encoding.UTF8.GetBytes(stringBuilder.ToString()), "text/csv", "Contact.csv");
 
 
         }

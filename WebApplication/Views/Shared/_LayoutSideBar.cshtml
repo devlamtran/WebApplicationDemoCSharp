@@ -43,6 +43,7 @@
 
 <body>
     <input type="hidden" id="hidCulture" value="@culture" />
+    <input type="hidden" id="categoryId" value="@ViewBag.CategoryId" />
     <header id="header">
         <!--header-->
         <div class="header_top">
@@ -115,7 +116,7 @@
                                     @if (User.IsInRole("ADMIN"))
                                     {
                                         <li><a href="/@culture/Admin/Index">Admin</a></li>
-                                        <li><a href="/@culture/profile/@User.Identity.Name"><i class="fa fa-user"></i>  @_loc["Profile"] [ <span id="lbl_number_items_header">0</span> ] </a></li>
+                                        <li><a href="/@culture/profile/@User.Identity.Name"><i class="fa fa-user"></i>  @_loc["Profile"] </a></li>
 
                                         <li><a href="/@culture/Cart/Index"><i class="fa fa-shopping-cart"></i>  @_loc["Cart"] [ <span id="lbl_number_items_header">0</span> ] </a></li>
                                         <li><a href="/@culture/AccountRegister/Logout"><i class="fa fa-lock-open"></i>  @_loc["Logout"]</a></li>
@@ -123,7 +124,7 @@
                                     else
                                     {
 
-                                        <li><a href="/@culture/profile/@User.Identity.Name"><i class="fa fa-user"></i>  @_loc["Profile"] [ <span id="lbl_number_items_header">0</span> ] </a></li>
+                                        <li><a href="/@culture/profile/@User.Identity.Name"><i class="fa fa-user"></i>  @_loc["Profile"] </a></li>
 
                                         <li><a href="/@culture/Cart/Index"><i class="fa fa-shopping-cart"></i>  @_loc["Cart"] [ <span id="lbl_number_items_header">0</span> ] </a></li>
                                         <li><a href="/@culture/AccountRegister/Logout"><i class="fa fa-lock-open"></i>  @_loc["Logout"]</a></li>
@@ -190,7 +191,7 @@
                     <form class="d-none d-sm-inline-block form-in" asp-controller="Product" asp-action="Index" method="get">
                         <div class="col-sm-3">
                             <div class="search_box pull-right">
-                                <input name="keyword" oninput="searchByName(this)" value="@ViewBag.KeySearch" type="text" placeholder="Search" />
+                                <input name="keyword" oninput="searchByName(this)" id="keyword" value="@ViewBag.KeySearch" type="text" placeholder="Search" />
                             </div>
                         </div>
                     </form>

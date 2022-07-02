@@ -27,12 +27,12 @@ namespace WebApplication.Controllers
         private readonly string _clientId;
         private readonly string _secretKey;
         public double TyGiaUSD = 23300;
-        public CheckoutController(ISaleService saleService, IConfiguration config)
+        public CheckoutController(ISaleService saleService, IConfiguration configuration)
         {
             
             _saleService = saleService;
-            _clientId = config["PaypalSettings:ClientId"];
-            _secretKey = config["PaypalSettings:SecretKey"];
+            _clientId = configuration["PaypalSettings:ClientId"];
+            _secretKey = configuration["PaypalSettings:SecretKey"];
         }
 
         
@@ -132,100 +132,117 @@ namespace WebApplication.Controllers
             return View(result);
         }
 
-        [Authorize]
-        public  IActionResult PaypalCheckout()
-        {
-            var session = HttpContext.Session.GetString("CartSession");
-            List<CartItemViewModel> currentCart = new List<CartItemViewModel>();
-            if (session != null)
-                currentCart = JsonConvert.DeserializeObject<List<CartItemViewModel>>(session);
-            var environment = new SandboxEnvironment(_clientId, _secretKey);
-            var client = new PayPalHttpClient(environment);
+        
+        private Payment payment;
 
-            #region Create Paypal Order
-            var itemList = new ItemList()
+        private Payment CreatePayment(APIContext apiContext, string redirectUrl)
+        {
+            var listItems = new ItemList()
             {
                 items = new List<Item>()
             };
-            var total = Math.Round(currentCart.Sum(p => p.Price * p.Quantity), 2);
-            foreach (var item in currentCart)
+            var session = HttpContext.Session.GetString("CartSession");
+            List<CartItemViewModel> currentCart = new List<CartItemViewModel>();
+            if (session != null) { 
+            currentCart = JsonConvert.DeserializeObject<List<CartItemViewModel>>(session);
+            }
+            foreach (var cart in currentCart)
             {
-                itemList.items.Add(new Item()
+                listItems.items.Add(new Item()
                 {
-                    name = item.Name,
+                    name = cart.Name,
                     currency = "USD",
-                    price = Math.Round(item.Price, 2).ToString(),
-                    quantity = item.Quantity.ToString(),
+                    price = Math.Round(cart.Price, 2).ToString(),
+                    quantity = cart.Quantity.ToString(),
                     sku = "sku",
                     tax = "0"
                 });
             }
-            #endregion
-
-            var paypalOrderId = DateTime.Now.Ticks;
-            var hostname = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
-            var payment = new Payment()
+            var payer = new Payer()
+            {
+                payment_method = "paypal"
+            };
+            var redirUrls = new RedirectUrls()
+            {
+                cancel_url = redirectUrl,
+                return_url = redirectUrl
+            };
+            var details = new Details()
+            {
+                tax = "1",
+                shipping ="2",
+                subtotal = currentCart.Sum(x => x.Quantity * x.Price).ToString()
+            };
+            var amount = new Amount()
+            {
+                currency ="USD",
+                total = (Convert.ToDouble(details.tax) + Convert.ToDouble(details.shipping) + Convert.ToDouble(details.subtotal)).ToString()
+            };
+            var transactionList = new List<Transaction>();
+            transactionList.Add(new Transaction()
+            {
+                description = "testing transaction description",
+                invoice_number = Convert.ToString((new Random()).Next(100000)),
+                amount = amount,
+                item_list = listItems
+            }) ;
+            payment = new Payment()
             {
                 intent = "sale",
-                transactions = new List<Transaction>()
-                {
-                    new Transaction()
-                    {
-                        amount = new Amount()
-                        {
-                            total = total.ToString(),
-                            currency = "USD",
-                            details = new  Details
-                            {
-                                tax ="0",
-                                shipping = "0",
-                                subtotal = total.ToString()
-                            }
-                        },
-                        item_list = itemList,
-                        description = $"Invoice #{paypalOrderId}",
-                        invoice_number = paypalOrderId.ToString()
-                    }
-                },
-                redirect_urls = new RedirectUrls()
-                {
-                    cancel_url = $"{hostname}/GioHang/CheckoutFail",
-                    return_url = $"{hostname}/GioHang/CheckoutSuccess"
-                },
-                payer = new Payer()
-                {
-                    payment_method = "paypal"
-                }
+                payer  = payer,
+                transactions = transactionList ,
+                redirect_urls = redirUrls
+                
             };
+            return payment.Create(apiContext);
 
-            //var config = ConfigManager.Instance.GetProperties();
-            var accessToken = new OAuthTokenCredential(_clientId,_secretKey).GetAccessToken();
+        }
+        private Payment ExecutePayment(APIContext apiContext, string payerId, string paymentId)
+        {
+            var paymentExecution = new PaymentExecution()
+            {
+                payer_id = payerId,
+                
+            };
+            payment = new Payment()
+            {
+                id = paymentId
+            };
+            return payment.Execute(apiContext,paymentExecution);
+        }
+
+        [Authorize]
+        public IActionResult PaypalCheckout()
+        {
+            var accessToken = new OAuthTokenCredential(_clientId, _secretKey).GetAccessToken();
             var apiContext = new APIContext(accessToken);
-
-            //var createdPayment = payment.Create(apiContext);
-            //request.RequestBody(payment);
 
             try
             {
-                var createdPayment = payment.Create(apiContext);
-                //var response = await client.Execute(request);
-                //var statusCode = response.StatusCode;
-                ///Payment result = response.Result<Payment>();
-
-                //var links = result.links.GetEnumerator();
-                var links = createdPayment.links.GetEnumerator();
-                string paypalRedirectUrl = null;
-                while (links.MoveNext())
-                {
-                    Links lnk = links.Current;
-                    if (lnk.rel.ToLower().Trim().Equals("approval_url"))
-                    {
-                        //saving the payapalredirect URL to which user will be redirected for payment  
-                        paypalRedirectUrl = lnk.href;
-                    }
-                }
+                
                
-                return Redirect(paypalRedirectUrl);
+                    string baseURI = "/vi/Checkout/PaypalCheckout";
+                    var createdPayment = CreatePayment(apiContext, baseURI);
+                    //var response = await client.Execute(request);
+                    //var statusCode = response.StatusCode;
+                    ///Payment result = response.Result<Payment>();
+
+                    //var links = result.links.GetEnumerator();
+                    var links = createdPayment.links.GetEnumerator();
+                    string paypalRedirectUrl = null;
+                    while (links.MoveNext())
+                    {
+                        Links lnk = links.Current;
+                        Console.WriteLine("Ok");
+                        if (lnk.rel.ToLower().Trim().Equals("approval_url"))
+                        {
+                            //saving the payapalredirect URL to which user will be redirected for payment  
+                            paypalRedirectUrl = lnk.href;
+                        }
+                    }
+
+                    return Redirect(paypalRedirectUrl);
+                
             }
             catch (HttpException httpException)
             {
@@ -236,6 +253,7 @@ namespace WebApplication.Controllers
                 return Redirect("CheckoutFail");
             }
         }
+
 
     }
 }

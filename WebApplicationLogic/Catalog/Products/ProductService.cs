@@ -202,6 +202,18 @@ namespace WebApplicationLogic.Catalog.Products
             {
                 query = query.Where(p => p.pic.CategoryId == request.CategoryId);
             }
+            if (!string.IsNullOrEmpty(request.BrandRange))
+            {
+                if (request.BrandRange != "All")
+                {
+                    query = query.Where(x => x.pt.Brand.Contains(request.BrandRange));
+                }
+
+            }
+            if (request.PriceRange != 0)
+            {
+                query = query.Where(p => p.p.Price <= request.PriceRange);
+            }
 
             //3. Paging
             int totalRow = await query.CountAsync();

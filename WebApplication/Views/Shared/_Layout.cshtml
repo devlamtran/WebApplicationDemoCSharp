@@ -108,14 +108,14 @@
                                     @if (User.IsInRole("ADMIN"))
                                     {
                                         <li><a href="/@culture/Admin/Index">Admin</a></li>
-                                        <li><a href="/@culture/profile/@User.Identity.Name"><i class="fa fa-user"></i>  @_loc["Profile"] [ <span id="lbl_number_items_header">0</span> ] </a></li>
+                                        <li><a href="/@culture/profile/@User.Identity.Name"><i class="fa fa-user"></i>  @_loc["Profile"] </a></li>
 
                                         <li><a href="/@culture/Cart/Index"><i class="fa fa-shopping-cart"></i>  @_loc["Cart"] [ <span id="lbl_number_items_header">0</span> ] </a></li>
                                         <li><a href="/@culture/AccountRegister/Logout"><i class="fa fa-lock-open"></i>  @_loc["Logout"]</a></li>
                                     }
                                     else
                                     {
-                                        <li><a href="/@culture/profile/@User.Identity.Name"><i class="fa fa-user"></i>  @_loc["Profile"] [ <span id="lbl_number_items_header">0</span> ] </a></li>
+                                        <li><a href="/@culture/profile/@User.Identity.Name"><i class="fa fa-user"></i>  @_loc["Profile"] </a></li>
 
                                         <li><a href="/@culture/Cart/Index"><i class="fa fa-shopping-cart"></i>  @_loc["Cart"] [ <span id="lbl_number_items_header">0</span> ] </a></li>
                                         <li><a href="/@culture/Account/Logout"><i class="fa fa-lock-open"></i>  @_loc["Logout"]</a></li>

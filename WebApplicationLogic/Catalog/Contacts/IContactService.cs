@@ -15,5 +15,6 @@ namespace WebApplicationLogic.Catalog.Contacts
         Task<int> Delete(int contactId);
         Task<ContactViewModel> GetById(int contactId);
         Task<int> Process(ContactProcessRequest request);
+        List<ContactViewModel> GetAllContact();
     }
 }
