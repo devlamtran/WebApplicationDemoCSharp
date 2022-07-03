@@ -44,7 +44,7 @@ namespace WebApplication.Controllers.Admin
                 CategoryId = categoryId
             };
             var data = await _productService.GetAllPaging(request);
-            //ViewBag.Keyword = keyword;
+            ViewBag.Keyword = keyword;
 
             var categories = await _categoryService.GetAll("vi");
             ViewBag.Categories = categories.Select(x => new SelectListItem()
@@ -202,6 +202,64 @@ namespace WebApplication.Controllers.Admin
             return View(request);
         }
 
-       
+        [HttpGet]
+        public async Task<string> PagingProductAdminAjax(string keyword, int page, string languageId)
+        {
+            string html = "";
+            var request = new GetManageProductPagingRequest()
+            {
+             
+                KeyWord = keyword,
+                PageIndex = page,
+                PageSize = 6,
+                LanguageId = languageId
+
+            };
+            var data = await _productService.GetAllPaging(request);
+
+            foreach (ProductViewModel p in data.Items)
+            {
+                html += "<tr>"
+
+                      + "<td>" + p.Id + "</td>"
+                      + "<td><img width='80' src='/" + p.ThumbnailImage + "' alt=''></td>"
+                      + "<td>" + p.Name + "</td>"
+                      + "<td>" + p.ToStringOriginalPrice() + "</td>"
+                      + "<td>" + p.ToStringPrice() + "</td>"
+                      + "<td>" + p.ViewCount + "</td>"
+                      + "<td>"
+                      + "<div class='row'>"
+                      +             "<div class='col-md-4'>"
+                      +             "<form action = '/"+languageId+"/ProductAdmin/Delete/"+ p.Id+ "'>"
+
+                      +             "<input type='submit' value='Delete' class='btn btn-danger' />"
+                      +             "</form>"
+
+                      +             "</div>"
+                      +             " |"
+                      +             "<div class='col-md-4'>"
+                      +             "<form action = '/" + languageId+"/ProductAdmin/Edit/"+ p.Id+"' >"
+
+                      +             "<input type='submit' value='Update' class='btn btn-warning' />"
+                      +             "</form>"
+
+                      +             "</div>"
+                      +             " |"
+                      +             "<div class='col-md-1'>"
+                      +             "<form action = '/" + languageId + "/ProductAdmin/CategoryAssign/" + p.Id+"' >"
+
+                      +              "<input type='submit' value='Assign' class='btn btn-primary' />"
+                      +               "</form>"
+                      +              "</div>"
+                      +         "</div>"
+                      + "</td >"
+
+                      + "</tr>";
+            }
+
+            return html;
+        }
+
+
     }
 }

@@ -127,6 +127,65 @@
 
 			    });
 	});
+
+	$('.paging-itemBill').click(function (e) {
+		e.preventDefault();
+		const culture = $('#hidCulture').val();
 	
+		$(".pagingBill").find(".paging-itemBill.active").removeClass("active");
+		$(this).addClass("active");
+
+		var pageNumber = $(this).attr("data-page");
+		var userName = $(this).attr("data-user");
+		var keyword = $(this).attr("data-key");
+		$.ajax({
+			type: 'GET',
+			url: "/" + culture + '/Checkout/PagingBillAjax',
+			data: {
+				
+				"page": pageNumber,
+				"languageId": culture,
+				"userName": userName,
+				"keyword": keyword
+			},
+			success: function (result) {
+				// alert(pageNumber);
+				$("#body").empty();
+			
+				$('#body').append(result);
+			}
+
+		});
+	});
+
+	$('.paging-itemProductAdmin').click(function (e) {
+		e.preventDefault();
+		const culture = $('#hidCulture').val();
+
+		$(".pagingProductAdmin").find(".paging-itemProductAdmin.active").removeClass("active");
+		$(this).addClass("active");
+
+		var pageNumber = $(this).attr("data-page");
+		
+		var keyword = $(this).attr("data-key");
+		$.ajax({
+			type: 'GET',
+			url: "/" + culture + '/ProductAdmin/PagingProductAdminAjax',
+			data: {
+				"page": pageNumber,
+				"languageId": culture,
+				"keyword": keyword
+				
+			},
+			success: function (result) {
+				// alert(pageNumber);
+				$("#body").empty();
+
+				$('#body').append(result);
+			}
+
+		});
+	});
+
    
 })

@@ -95,14 +95,14 @@
                             @foreach (var item in Model.Items)
                             {
                                 <tr>
-
+                                    @{string status = item.StatusToString(); }
                                     <td>@Html.DisplayFor(modelItem => item.Id)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Name) </td>
 
                                     <td>@Html.DisplayFor(modelItem => item.Email)</td>
                                     <td>@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Message)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.Status)</td>
+                                    <td>@Html.DisplayFor(modelItem => status)</td>
                                     <td>
                                         <div class="row">
                                             <div class="col-md-4">

@@ -19,5 +19,14 @@ namespace WebApplicationLogic.Catalog.Sales.Dto
         public List<OrderDetail> OrderDetails { get; set; }
 
         public User User { get; set; }
+
+        public string StatusToString()
+        {
+            if (Status == 0) { return "Đang xử lí"; }
+            if (Status == (OrderStatus)1) { return "Đã xác nhận"; }
+            if (Status == (OrderStatus)2) { return "Đang gửi đi"; }
+            if (Status == (OrderStatus)3) { return "Đơn hàng đã chuyển"; }
+            return "Đã hủy";
+        }
     }
 }

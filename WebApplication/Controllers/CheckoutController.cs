@@ -253,6 +253,41 @@ namespace WebApplication.Controllers
                 return Redirect("CheckoutFail");
             }
         }
+        [HttpGet]
+        public async Task<string> PagingBillAjax(string userName, string keyword, int page, string languageId)
+        {
+            string html = "";
+            var request = new GetOrderPagingRequest()
+            {
+                Keyword = keyword,
+                PageIndex = page,
+                PageSize = 5,
+
+            };
+            var data = await _saleService.GetOrdersPaging(request, userName);
+
+            foreach (OrderViewModel oder in data.Items)
+            {
+                html += "<tr>"
+                                
+                      +         " <td> " + oder.Id+"</ td >"
+                      +         " <td> " +oder.ShipName+" </ td >"
+                      +         " <td> " + oder.ShipPhoneNumber+" </ td >"
+                      +         " <td> "+ oder.ShipEmail+" </ td >"
+                      +         " <td> " + oder.OrderDate +" </ td >"
+                      +         " <td> " + oder.StatusToString()+" </ td >"
+                      +         " <td>"
+                      +         " <form action='/" + languageId+ "/Checkout/Details/" + oder.Id + "' >"
+
+                      +         "<input type = 'submit' value = 'Xem' class='btn btn-primary' />"
+                      +                      "</form>"
+                      +        "</ td >"
+
+                      +     "</tr>";
+            }
+
+            return html;
+        }
 
 
     }

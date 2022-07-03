@@ -18,5 +18,11 @@ namespace WebApplicationLogic.Catalog.Contacts.Dto
         public string Message { set; get; }
 
         public int Status { set; get; }
+
+        public string StatusToString()
+        {
+            if(Status == 1) { return "Đã phản hồi"; }
+            return "Chưa phản hồi";
+        }
     }
 }

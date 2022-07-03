@@ -49,7 +49,7 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-
+                            <th>Id</th>
                             <th>Hình SP</th>
                             <th>Tên</th>
                             <th>Giá nhập</th>
@@ -60,6 +60,7 @@
                     </thead>
                     <tfoot>
                         <tr>
+                            <th>Id</th>
                             <th>Hình SP</th>
                             <th>Tên</th>
                             <th>Giá nhập</th>
@@ -68,55 +69,71 @@
                             <th>Action</th>
                         </tr>
                     </tfoot>
-                    <tbody>
+                    <tbody id="body">
                         @foreach (var item in Model.Items)
                         {
-                            <tr>
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                            <td><img width="80" src="/@Html.DisplayFor(modelItem => item.ThumbnailImage)" alt=""></td>
+                            <td>@Html.DisplayFor(modelItem => item.Name) </td>
+                            @{
+                                string OriginalPrice = item.OriginalPrice.ToString("#,###", new CultureInfo("vi-vn")) + " đ";
+                                string Price = item.Price.ToString("#,###", new CultureInfo("vi-vn")) + " đ";
 
-                                <td><img width="80" src="/@Html.DisplayFor(modelItem => item.ThumbnailImage)" alt=""></td>
-                                <td>@Html.DisplayFor(modelItem => item.Name) </td>
-                                @{
-                                    string OriginalPrice = item.OriginalPrice.ToString("#,###", new CultureInfo("vi-vn")) + " đ";
-                                    string Price = item.Price.ToString("#,###", new CultureInfo("vi-vn")) + " đ";
+                            }
+                            <td>@Html.DisplayFor(modelItem => OriginalPrice)</td>
+                            <td>@Html.DisplayFor(modelItem => Price)</td>
+                            <td>@Html.DisplayFor(modelItem => item.ViewCount)</td>
+                            <td>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <form action="/@culture/ProductAdmin/Delete/@Html.DisplayFor(modelItem => item.Id)">
 
-                                }
-                                <td>@Html.DisplayFor(modelItem => OriginalPrice)</td>
-                                <td>@Html.DisplayFor(modelItem => Price)</td>
-                                <td>@Html.DisplayFor(modelItem => item.ViewCount)</td>
-                                <td>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <form action="/@culture/ProductAdmin/Delete/@Html.DisplayFor(modelItem => item.Id)">
+                                            <input type="submit" value="Delete" class="btn btn-danger" />
+                                        </form>
 
-                                                <input type="submit" value="Delete" class="btn btn-danger" />
-                                            </form>
-
-                                        </div>
-                                        |
-                                        <div class="col-md-4">
-                                            <form action="/@culture/ProductAdmin/Edit/@Html.DisplayFor(modelItem => item.Id)">
-
-                                                <input type="submit" value="Update" class="btn btn-warning" />
-                                            </form>
-
-                                        </div>
-                                        |
-                                        <div class="col-md-1">
-                                            <form action="/@culture/ProductAdmin/CategoryAssign/@Html.DisplayFor(modelItem => item.Id)">
-
-                                                <input type="submit" value="Assign" class="btn btn-primary" />
-                                            </form>
-                                        </div>
                                     </div>
+                                    |
+                                    <div class="col-md-4">
+                                        <form action="/@culture/ProductAdmin/Edit/@Html.DisplayFor(modelItem => item.Id)">
 
-                                </td>
+                                            <input type="submit" value="Update" class="btn btn-warning" />
+                                        </form>
 
-                            </tr>
+                                    </div>
+                                    |
+                                    <div class="col-md-1">
+                                        <form action="/@culture/ProductAdmin/CategoryAssign/@Html.DisplayFor(modelItem => item.Id)">
+
+                                            <input type="submit" value="Assign" class="btn btn-primary" />
+                                        </form>
+                                    </div>
+                                </div>
+
+                            </td>
+
+                        </tr>
                         }
                     </tbody>
                 </table>
             </div>
-            @await Component.InvokeAsync("PagerAdmin", Model)
+            <ul class="pagination pagingProductAdmin">
+                @for (var i = 1; i <= Model.PageCount; i++)
+                {
+                    if (i == Model.PageIndex)
+                    {
+                        <li class="paginate_button page-item paging-itemProductAdmin active" data-page="@i" data-key="@ViewBag.Keyword"><a href="">@i</a></li>
+
+                    }
+                    else
+                    {
+                        <li class="paginate_button page-item paging-itemProductAdmin" data-page="@i" data-key="@ViewBag.Keyword"><a href="">@i</a></li>
+
+                    }
+                }
+
+
+            </ul>
         </div>
     </div>
 

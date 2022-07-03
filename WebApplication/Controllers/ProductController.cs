@@ -164,7 +164,7 @@ namespace WebApplication.Controllers
             return html;
         }
         [HttpGet]
-        public async Task<string> PagingPriceBrandProductAjax(string keyword, decimal priceRange, string brandRange, int categoryId, string languageId)
+        public async Task<string> PagingPriceBrandProductAjax(string keyword, decimal priceRange, string brandRange,int page, int categoryId, string languageId)
         {
             string html = "";
             var request = new GetProductFilterPagingRequest()
@@ -172,7 +172,7 @@ namespace WebApplication.Controllers
                 CategoryId = categoryId,
                 PriceRange = priceRange,
                 BrandRange = brandRange,
-                PageIndex = 1,
+                PageIndex = page,
                 PageSize = 6,
                 LanguageId = languageId
 
