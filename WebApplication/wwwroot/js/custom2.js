@@ -168,14 +168,75 @@
 		var pageNumber = $(this).attr("data-page");
 		
 		var keyword = $(this).attr("data-key");
+		var categoryId = $(this).attr("data-categoryId");
 		$.ajax({
 			type: 'GET',
 			url: "/" + culture + '/ProductAdmin/PagingProductAdminAjax',
 			data: {
 				"page": pageNumber,
 				"languageId": culture,
-				"keyword": keyword
+				"keyword": keyword,
+				"categoryId": categoryId,
 				
+			},
+			success: function (result) {
+				// alert(pageNumber);
+				$("#body").empty();
+
+				$('#body').append(result);
+			}
+
+		});
+	});
+
+	$('.paging-itemUserAdmin').click(function (e) {
+		e.preventDefault();
+		const culture = $('#hidCulture').val();
+
+		$(".pagingUserAdmin").find(".paging-itemUserAdmin.active").removeClass("active");
+		$(this).addClass("active");
+
+		var pageNumber = $(this).attr("data-page");
+
+		var keyword = $(this).attr("data-key");
+	
+		$.ajax({
+			type: 'GET',
+			url: "/" + culture + '/UserAdmin/PagingUserAdminAjax',
+			data: {
+				"page": pageNumber,
+				"languageId": culture,
+				"keyword": keyword
+
+			},
+			success: function (result) {
+				// alert(pageNumber);
+				$("#body").empty();
+
+				$('#body').append(result);
+			}
+
+		});
+	});
+	$('.paging-itemContactAdmin').click(function (e) {
+		e.preventDefault();
+		const culture = $('#hidCulture').val();
+
+		$(".pagingContactAdmin").find(".paging-itemContactAdmin.active").removeClass("active");
+		$(this).addClass("active");
+
+		var pageNumber = $(this).attr("data-page");
+
+		var keyword = $(this).attr("data-key");
+
+		$.ajax({
+			type: 'GET',
+			url: "/" + culture + '/ContactAdmin/PagingContactAdminAjax',
+			data: {
+				"page": pageNumber,
+				"languageId": culture,
+				"keyword": keyword
+
 			},
 			success: function (result) {
 				// alert(pageNumber);

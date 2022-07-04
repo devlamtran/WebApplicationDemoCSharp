@@ -24,7 +24,7 @@ namespace WebApplication.Controllers.Admin
         {
             _contactService = contactService;
         }
-        public async Task<IActionResult> Index(string keyword, int pageIndex = 1, int pageSize = 6)
+        public async Task<IActionResult> Index(string keyword, int pageIndex = 1, int pageSize = 2)
         {
            
 
@@ -37,7 +37,7 @@ namespace WebApplication.Controllers.Admin
               
             };
             var data = await _contactService.GetAllPaging(request);
-            
+            ViewBag.Keyword = keyword;
             return View(data);
         }
 
@@ -152,6 +152,63 @@ namespace WebApplication.Controllers.Admin
             return File(Encoding.UTF8.GetBytes(stringBuilder.ToString()), "text/csv", "Contact.csv");
 
 
+        }
+
+        [HttpGet]
+        public async Task<string> PagingContactAdminAjax(string keyword, int page, string languageId)
+        {
+            string html = "";
+            var request = new GetManageContactPagingRequest()
+            {
+                KeyWord = keyword,
+                PageIndex = page,
+                PageSize = 2
+
+
+            };
+            var data = await _contactService.GetAllPaging(request);
+
+            foreach (ContactViewModel contact in data.Items)
+            {
+                html += "<tr>"
+                      + "<td>" + contact.Id + "</td>"
+                      + "<td>" + contact.Name + "</td>"
+                      + "<td>" + contact.Email + "</td>"
+                      + "<td>" + contact.PhoneNumber + "</td>"
+                      + "<td>" + contact.StatusToString() + "</td>"
+                      + "<td>"
+                      + "<div class='row'>"
+                      + "<div class='col-md-4'>"
+                      + "<form action = '/" + languageId + "/ContactAdmin/Delete/" + contact.Id + "'>"
+
+                      + "<input type='submit' value='Delete' class='btn btn-danger' />"
+                      + "</form>"
+
+                      + "</div>"
+                      + "|"
+                      + "<div class='col-md-4'>"
+                      + "<form action = '/" + languageId + "/ContactAdmin/Process/" + contact.Id + "' >"
+
+                      + "<input type='submit' value='Phản hồi' class='btn btn-warning' />"
+                      + "</form>"
+
+                      + "</div>"
+                      + "|"
+                      + "<div class='col-md-1'>"
+                      + "<form action = '/" + languageId + "/ContactAdmin/Details/" + contact.Id + "' >"
+
+                      + "<input type='submit' value='Chi tiết' class='btn btn-warning' />"
+                      + "</form>"
+
+                      + "</div>"
+
+                      + "</div>"
+                      + "</td >"
+
+                      + "</tr>";
+            }
+
+            return html;
         }
 
     }

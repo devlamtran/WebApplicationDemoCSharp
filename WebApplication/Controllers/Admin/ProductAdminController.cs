@@ -31,7 +31,7 @@ namespace WebApplication.Controllers.Admin
             _configuration = configuration;
         }
 
-        public async Task<IActionResult> Index(string keyword, int? categoryId, int pageIndex = 1, int pageSize = 6)
+        public async Task<IActionResult> Index(string keyword, int? categoryId, int pageIndex = 1, int pageSize = 5)
         {
             var languageId = HttpContext.Session.GetString("DefaultLanguageId");
 
@@ -45,7 +45,7 @@ namespace WebApplication.Controllers.Admin
             };
             var data = await _productService.GetAllPaging(request);
             ViewBag.Keyword = keyword;
-
+            ViewBag.CategoryId = categoryId;
             var categories = await _categoryService.GetAll("vi");
             ViewBag.Categories = categories.Select(x => new SelectListItem()
             {
@@ -203,15 +203,15 @@ namespace WebApplication.Controllers.Admin
         }
 
         [HttpGet]
-        public async Task<string> PagingProductAdminAjax(string keyword, int page, string languageId)
+        public async Task<string> PagingProductAdminAjax(string keyword, int? categoryId, int page, string languageId)
         {
             string html = "";
             var request = new GetManageProductPagingRequest()
             {
-             
+                CategoryId = categoryId,
                 KeyWord = keyword,
                 PageIndex = page,
-                PageSize = 6,
+                PageSize = 5,
                 LanguageId = languageId
 
             };
@@ -236,7 +236,7 @@ namespace WebApplication.Controllers.Admin
                       +             "</form>"
 
                       +             "</div>"
-                      +             " |"
+                      +             "|"
                       +             "<div class='col-md-4'>"
                       +             "<form action = '/" + languageId+"/ProductAdmin/Edit/"+ p.Id+"' >"
 
@@ -244,7 +244,7 @@ namespace WebApplication.Controllers.Admin
                       +             "</form>"
 
                       +             "</div>"
-                      +             " |"
+                      +             "|"
                       +             "<div class='col-md-1'>"
                       +             "<form action = '/" + languageId + "/ProductAdmin/CategoryAssign/" + p.Id+"' >"
 

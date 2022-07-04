@@ -77,8 +77,8 @@
                             <td><img width="80" src="/@Html.DisplayFor(modelItem => item.ThumbnailImage)" alt=""></td>
                             <td>@Html.DisplayFor(modelItem => item.Name) </td>
                             @{
-                                string OriginalPrice = item.OriginalPrice.ToString("#,###", new CultureInfo("vi-vn")) + " đ";
-                                string Price = item.Price.ToString("#,###", new CultureInfo("vi-vn")) + " đ";
+                                string OriginalPrice = item.OriginalPrice.ToString("#,###", new CultureInfo("vi-vn")) + "đ";
+                                string Price = item.Price.ToString("#,###", new CultureInfo("vi-vn")) + "đ";
 
                             }
                             <td>@Html.DisplayFor(modelItem => OriginalPrice)</td>
@@ -122,12 +122,12 @@
                 {
                     if (i == Model.PageIndex)
                     {
-                        <li class="paginate_button page-item paging-itemProductAdmin active" data-page="@i" data-key="@ViewBag.Keyword"><a href="">@i</a></li>
+                        <li class="paginate_button page-item paging-itemProductAdmin active" data-page="@i" data-categoryId="@ViewBag.CategoryId" data-key="@ViewBag.Keyword"><a href="" aria-controls="dataTable" data-dt-idx="1" tabindex="0" class="page-link">@i</a></li>
 
                     }
                     else
                     {
-                        <li class="paginate_button page-item paging-itemProductAdmin" data-page="@i" data-key="@ViewBag.Keyword"><a href="">@i</a></li>
+                        <li class="paginate_button page-item paging-itemProductAdmin" data-page="@i" data-categoryId="@ViewBag.CategoryId" data-key="@ViewBag.Keyword"><a href="" aria-controls="dataTable" data-dt-idx="1" tabindex="0" class="page-link">@i</a></li>
 
                     }
                 }

@@ -131,6 +131,53 @@ namespace WebApplication.Controllers.Admin
             return roleAssignRequest;
         }
 
-      
+        [HttpGet]
+        public async Task<string> PagingUserAdminAjax(string keyword, int page, string languageId)
+        {
+            string html = "";
+            var request = new GetUserPagingRequest()
+            {
+                Keyword = keyword,
+                PageIndex = page,
+                PageSize = 5
+            };
+            var data = await _userService.GetUsersPaging(request);
+
+            foreach (UserViewModel user in data.Items)
+            {
+                html += "<tr>"                
+                      + "<td>" + user.FirstName + "</td>"
+                      + "<td>" + user.LastName + "</td>"
+                      + "<td>" + user.PhoneNumber + "</td>"
+                      + "<td>" + user.UserName + "</td>"
+                      + "<td>" + user.Email + "</td>"
+                      + "<td>"
+                      + "<div class='row'>"
+                      + "<div class='col-md-4'>"
+                      + "<form action = '/" + languageId + "/UserAdmin/Delete/" + user.Id + "'>"
+
+                      + "<input type='submit' value='Delete' class='btn btn-danger' />"
+                      + "</form>"
+
+                      + "</div>"
+                      + "|"
+                      + "<div class='col-md-4'>"
+                      + "<form action = '/" + languageId + "/UserAdmin/RoleAssign/" + user.Id + "' >"
+
+                      + "<input type='submit' value='Gán quyền' class='btn btn-warning' />"
+                      + "</form>"
+
+                      + "</div>"
+                     
+                      + "</div>"
+                      + "</td >"
+
+                      + "</tr>";
+            }
+
+            return html;
+        }
+
+
     }
 }
