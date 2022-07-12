@@ -4,7 +4,30 @@
     ViewData["Title"] = "Delete";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
+<div class="container-fluid">
 
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Xóa sản phẩm</h1>
+
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <a asp-action="Index" asp-controller="CheckoutAdmin" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"> Về danh sách đơn hàng  </a>
+        </div>
+        <div class="card-body">
+            <h4>Xóa đơn hàng ?</h4>
+
+
+            <form asp-action="Delete">
+                <input type="submit" value="Delete" class="btn btn-danger" /> |
+                
+            </form>
+
+        </div>
+    </div>
+
+</div>
 <h1>Delete</h1>
 
 <h3>Are you sure you want to delete this?</h3>

@@ -58,8 +58,6 @@ namespace WebApplicationLogic.Catalog.Contacts
             if (!string.IsNullOrEmpty(request.KeyWord))
                 query = query.Where(x => x.Name.Contains(request.KeyWord));
 
-           
-
             //3. Paging
             int totalRow = await query.CountAsync();
 

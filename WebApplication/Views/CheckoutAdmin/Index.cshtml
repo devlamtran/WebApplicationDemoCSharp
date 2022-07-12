@@ -14,7 +14,7 @@
 <div class="container-fluid">
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Danh sách Đơn hàng</h1>
+    <h1 class="h3 mb-2 text-gray-800">Danh sách đơn hàng</h1>
     
 
     <!-- DataTales Example -->
@@ -23,7 +23,7 @@
             
             <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" asp-action="Index" method="get">
                 <div class="input-group">
-                    <input name="keyword" type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                    <input name="keyword" type="text" value="@ViewBag.Keyword" class="form-control bg-light border-0 small" placeholder="Search for..."
                            aria-label="Search" aria-describedby="basic-addon2">
                     <div class="input-group-append">
                         <button class="btn btn-primary" type="button">
@@ -59,45 +59,69 @@
                             <th>Action</th>
                         </tr>
                     </tfoot>
-                    <tbody>
+                    <tbody id="body">
                         @foreach (var item in Model.Items)
                         {
-                        <tr>
+                            <tr>
 
-                            <td>@Html.DisplayFor(modelItem => item.Id)</td>
-                            <td>@Html.DisplayFor(modelItem => item.ShipName) </td>
-                            <td>@Html.DisplayFor(modelItem => item.ShipPhoneNumber)</td>
-                            <td>@Html.DisplayFor(modelItem => item.ShipEmail)</td>
-                            <td>@Html.DisplayFor(modelItem => item.OrderDate)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Status)</td>
-                            <td>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <form action="/@culture/CheckoutAdmin/Delete/@Html.DisplayFor(modelItem => item.Id)">
+                                <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                                <td>@Html.DisplayFor(modelItem => item.ShipName) </td>
+                                <td>@Html.DisplayFor(modelItem => item.ShipPhoneNumber)</td>
+                                <td>@Html.DisplayFor(modelItem => item.ShipEmail)</td>
+                                <td>@Html.DisplayFor(modelItem => item.OrderDate)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Status)</td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <form action="/@culture/CheckoutAdmin/Delete/@Html.DisplayFor(modelItem => item.Id)">
 
-                                            <input type="submit" value="Delete" class="btn btn-danger" />
-                                        </form>
+                                                <input type="submit" value="Delete" class="btn btn-danger" />
+                                            </form>
+
+                                        </div>
+                                        |
+                                        <div class="col-md-4">
+                                            <form action="/@culture/CheckoutAdmin/Details/@Html.DisplayFor(modelItem => item.Id)">
+
+                                                <input type="submit" value="Details" class="btn btn-warning" />
+                                            </form>
+
+                                        </div>
+                                        |
+                                        <div class="col-md-1">
+                                            <form action="/@culture/CheckoutAdmin/Edit/@Html.DisplayFor(modelItem => item.Id)">
+
+                                                <input type="submit" value="Update" class="btn btn-primary" />
+                                            </form>
+
+                                        </div>
 
                                     </div>
-                                    |
-                                    <div class="col-md-4">
-                                        <form action="/@culture/CheckoutAdmin/Details/@Html.DisplayFor(modelItem => item.Id)">
 
-                                            <input type="submit" value="Details" class="btn btn-primary" />
-                                        </form>
+                                </td>
 
-                                    </div>
-
-                                </div>
-                               
-                            </td>
-
-                        </tr>
+                            </tr>
                         }
                     </tbody>
                 </table>
             </div>
-            @await Component.InvokeAsync("PagerAdmin", Model)
+            <ul class="pagination pagingOrderAdmin">
+                @for (var i = 1; i <= Model.PageCount; i++)
+                {
+                    if (i == Model.PageIndex)
+                    {
+                        <li class="paginate_button page-item paging-itemOrderAdmin active" data-page="@i" data-key="@ViewBag.Keyword"><a href="" aria-controls="dataTable" data-dt-idx="1" tabindex="0" class="page-link">@i</a></li>
+
+                    }
+                    else
+                    {
+                        <li class="paginate_button page-item paging-itemOrderAdmin" data-page="@i" data-key="@ViewBag.Keyword"><a href="" aria-controls="dataTable" data-dt-idx="1" tabindex="0" class="page-link">@i</a></li>
+
+                    }
+                }
+
+
+            </ul>
         </div>
     </div>
 

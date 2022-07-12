@@ -1,0 +1,46 @@
+﻿@model WebApplicationLogic.Catalog.Sales.Dto.OrderUpdateRequest
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Cập nhật đơn hàng</h1>
+
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <a asp-action="Index" asp-controller="CheckoutAdmin" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"> Về danh sách đơn hàng </a>
+        </div>
+        <div class="card-body">
+            <div class="col-md-4">
+                <form asp-action="Edit" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" />
+                    
+                    <div class="form-group">
+                        <label asp-for="Status" class="control-label">Trạng thái</label>
+                        <select name="Status" asp-for="Status">
+                            <option value="Confirmed">Đã nhận </option>
+                            <option value="Shipping">Đang giao</option>
+                            <option value="Success">Đã giao</option>
+                            <option value="Canceled">Đã hủy</option>
+
+                        </select>
+                        <span asp-validation-for="Status" class="text-danger"></span>
+                    </div>
+
+                    
+                    <div class="form-group">
+                        <input type="submit" value="Cập nhật" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+

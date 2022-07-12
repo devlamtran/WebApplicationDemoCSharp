@@ -40,7 +40,7 @@ namespace WebApplication.Models
         public bool SendEmailContact(ContactRequest request)
         {
             MailMessage mailMessage = new MailMessage();
-            mailMessage.From = new MailAddress("yourmailtosend");
+            mailMessage.From = new MailAddress("tranriemann5298@gmail.com");
             mailMessage.To.Add(new MailAddress(request.Email));
             mailMessage.Subject = "Contact was sent";
             mailMessage.IsBodyHtml = true;
@@ -48,7 +48,7 @@ namespace WebApplication.Models
 
             SmtpClient client = new SmtpClient();
             client.UseDefaultCredentials = false;
-            client.Credentials = new System.Net.NetworkCredential("yourmailtosend", "mkud");
+            client.Credentials = new System.Net.NetworkCredential("tranriemann5298@gmail.com", "vxgqhybroiuznkzy");
             client.EnableSsl = true;
             client.Host = "smtp.gmail.com";
             //client.Port = 80;
@@ -68,7 +68,7 @@ namespace WebApplication.Models
         public bool SendEmailContact(ContactProcessRequest request)
         {
             MailMessage mailMessage = new MailMessage();
-            mailMessage.From = new MailAddress("emailtosend");
+            mailMessage.From = new MailAddress("tranriemann5298@gmail.com");
             mailMessage.To.Add(new MailAddress(request.Email));
             mailMessage.Subject = request.Subject;
             mailMessage.IsBodyHtml = true;
@@ -76,7 +76,7 @@ namespace WebApplication.Models
 
             SmtpClient client = new SmtpClient();
             client.UseDefaultCredentials = false;
-            client.Credentials = new System.Net.NetworkCredential("emailtosend", "vxgqhybroiuznkzy");
+            client.Credentials = new System.Net.NetworkCredential("tranriemann5298@gmail.com", "vxgqhybroiuznkzy");
             client.EnableSsl = true;
             client.Host = "smtp.gmail.com";
             //client.Port = 80;

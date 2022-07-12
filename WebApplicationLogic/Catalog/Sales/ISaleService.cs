@@ -18,5 +18,7 @@ namespace WebApplicationLogic.Catalog.Sales
         Task<int> Delete(int orderId);
 
         Task<PageResult<OrderDetailViewModel>> GetOrderDetailPaging(GetOrderDetailPagingRequest request);
+        Task<OrderViewModel> GetById(int id);
+        Task<int> Update(OrderUpdateRequest request);
     }
 }

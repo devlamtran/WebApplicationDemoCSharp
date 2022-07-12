@@ -80,5 +80,93 @@ namespace WebApplication.Controllers.Admin
             var result = await _saleService.GetOrderDetailPaging(request);
             return View(result);
         }
+
+        [HttpGet]
+        public async Task<string> PagingOrderAdminAjax(string keyword, int page, string languageId)
+        {
+            string html = "";
+            var request = new GetOrderPagingRequest()
+            {
+                Keyword = keyword,
+                PageIndex = page,
+                PageSize = 5
+            };
+            var data = await _saleService.GetOrdersPaging(request);
+
+            foreach (OrderViewModel o in data.Items)
+            {
+                html += "<tr>"
+
+                      + "<td>" + o.Id + "</td>"
+                      + "<td>" + o.ShipName + "</td>"
+                      + "<td>" + o.ShipPhoneNumber + "</td>"
+                      + "<td>" + o.ShipEmail + "</td>"
+                      + "<td>" + o.OrderDate + "</td>"
+                      + "<td>" + o.Status + "</td>"
+                      + "<td>"
+                      + "<div class='row'>"
+                      + "<div class='col-md-4'>"
+                      + "<form action = '/" + languageId + "/CheckoutAdmin/Delete/" + o.Id + "'>"
+
+                      + "<input type='submit' value='Delete' class='btn btn-danger' />"
+                      + "</form>"
+
+                      + "</div>"
+                      + "|"
+                      + "<div class='col-md-4'>"
+                      + "<form action = '/" + languageId + "/CheckoutAdmin/Details/" + o.Id + "' >"
+
+                      + "<input type='submit' value='Detail' class='btn btn-warning' />"
+                      + "</form>"
+
+                      + "</div>"
+                      + "|"
+                      + "<div class='col-md-1'>"
+                      + "<form action = '/" + languageId + "/CheckoutAdmin/Edit/" + o.Id + "' >"
+
+                      + "<input type='submit' value='Update' class='btn btn-primary' />"
+                      + "</form>"
+                      + "</div>"
+                      + "</div>"
+                      + "</td >"
+
+                      + "</tr>";
+            }
+
+            return html;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+
+            var order = await _saleService.GetById(id);
+            var editVm = new OrderUpdateRequest()
+            {
+                Id = order.Id,
+
+                Status = order.Status
+
+
+            };
+            return View(editVm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(OrderUpdateRequest request)
+        {
+            if (!ModelState.IsValid)
+                return View(request);
+
+            var result = await _saleService.Update(request);
+            if (result > 0)
+            {
+                //TempData["result"] = "Cập nhật sản phẩm thành công";
+                return RedirectToAction("Index");
+            }
+
+            //ModelState.AddModelError("", "Cập nhật sản phẩm thất bại");
+            return View(request);
+        }
     }
 }

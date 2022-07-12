@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WebApplicationData.EF;
 using WebApplicationData.Enties;
 using WebApplicationData.Enums;
-using WebApplicationLogic.Catalog.Products.Dto;
 using WebApplicationLogic.Catalog.Sales.Dto;
 using WebApplicationLogic.Dtos;
 
@@ -80,6 +77,26 @@ namespace WebApplicationLogic.Catalog.Sales
             return await _context.SaveChangesAsync();
         }
 
+        public async Task<OrderViewModel> GetById(int orderId)
+        {
+            var order = await _context.Orders.FindAsync(orderId);
+           
+            var  orderViewModel = new OrderViewModel()
+            {
+                Id = order.Id,
+                ShipEmail = order.ShipName,
+                ShipAddress = order.ShipAddress,
+                ShipName = order.ShipName,
+                ShipPhoneNumber = order.ShipPhoneNumber,
+                Status = order.Status,
+                OrderDate = order.OrderDate,
+                UserId = order.UserId
+
+
+            };
+            return orderViewModel;
+        }
+
         public async Task<PageResult<OrderDetailViewModel>> GetOrderDetailPaging(GetOrderDetailPagingRequest request)
         {
             var query = from o in _context.Orders
@@ -119,6 +136,7 @@ namespace WebApplicationLogic.Catalog.Sales
 
         public async Task<PageResult<OrderViewModel>> GetOrdersPaging(GetOrderPagingRequest request)
         {
+           
             var query = from o in _context.Orders
                         
                         select new 
@@ -130,8 +148,10 @@ namespace WebApplicationLogic.Catalog.Sales
             //var queryGroupBy = query.GroupBy(x => new { x.o.UserId, x.o.Id, x.o.ShipName, x.o.ShipEmail, x.o.ShipAddress, x.o.OrderDate, x.o.ShipPhoneNumber, x.o.Status });
             
             if (!string.IsNullOrEmpty(request.Keyword))
+
             {
-                query = query.Where(x => x.o.ShipName.Contains(request.Keyword)
+                DateTime? mydate = DateTime.Parse(request.Keyword);
+                query = query.Where(x => x.o.OrderDate >= mydate
                  || x.o.ShipPhoneNumber.Contains(request.Keyword));
 
 
@@ -164,6 +184,7 @@ namespace WebApplicationLogic.Catalog.Sales
                 PageSize = request.PageSize,
                 Items = data
             };
+            
             return pageResult;
         }
 
@@ -218,6 +239,21 @@ namespace WebApplicationLogic.Catalog.Sales
             return pageResult;
         }
 
+        public async Task<int> Update(OrderUpdateRequest request)
+        {
+            var order = await _context.Orders.FindAsync(request.Id);
+          
+
+            if (order == null)
+            {
+                return -1;
+            }
+
+            order.Status = request.Status;
+            
+
+            return await _context.SaveChangesAsync();
+        }
     }
 
    
