@@ -219,7 +219,9 @@ namespace WebApplicationLogic.Catalog.Users
             user.LastName = request.LastName;
             user.PhoneNumber = request.PhoneNumber;
             user.UserName = request.UserName;
+           
             user.ImagePath = await SaveFile(request.ImagePath);
+            
 
             var result = await _userManager.UpdateAsync(user);
             if (result.Succeeded)

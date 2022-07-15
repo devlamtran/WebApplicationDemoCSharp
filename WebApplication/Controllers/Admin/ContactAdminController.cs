@@ -63,7 +63,7 @@ namespace WebApplication.Controllers.Admin
         }
 
         [HttpGet]
-        public async Task<IActionResult> Process(int id)
+        public async Task<IActionResult> ResponseContact(int id)
         {
             var contactProcess = await _contactService.GetById(id);
             return View(new ContactProcessRequest()
@@ -72,11 +72,12 @@ namespace WebApplication.Controllers.Admin
                 Name = contactProcess.Name,
                 Email = contactProcess.Email,
                 Message = contactProcess.Message
+               
             });
         }
 
         [HttpPost]
-        public async Task<IActionResult> Process(ContactProcessRequest request)
+        public async Task<IActionResult> ResponseContact(ContactProcessRequest request)
         {
             if (!ModelState.IsValid)
                 return View(request);
@@ -84,7 +85,7 @@ namespace WebApplication.Controllers.Admin
             var result = await _contactService.Process(request);
             if (result < 0)
             {
-                //TempData["result"] = "Cập nhật sản phẩm thành công";
+               
                 return View(request);
             }
             EmailHelper emailHelper = new EmailHelper();
@@ -183,20 +184,14 @@ namespace WebApplication.Controllers.Admin
                       + "</div>"
                       + "|"
                       + "<div class='col-md-4'>"
-                      + "<form action = '/" + languageId + "/ContactAdmin/Process/" + contact.Id + "' >"
+                      + "<form action = '/" + languageId + "/ContactAdmin/ResponseContact/" + contact.Id + "' >"
 
                       + "<input type='submit' value='Phản hồi' class='btn btn-warning' />"
                       + "</form>"
 
                       + "</div>"
-                      + "|"
-                      + "<div class='col-md-1'>"
-                      + "<form action = '/" + languageId + "/ContactAdmin/Details/" + contact.Id + "' >"
-
-                      + "<input type='submit' value='Chi tiết' class='btn btn-warning' />"
-                      + "</form>"
-
-                      + "</div>"
+                     
+                     
 
                       + "</div>"
                       + "</td >"

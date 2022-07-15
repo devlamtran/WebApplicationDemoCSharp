@@ -19,7 +19,7 @@
             <div class="col-sm-4 col-sm-offset-1">
                 <div class="login-form">
                     <!--login form-->
-                    <h2>Login to your account</h2>
+                    <h2>Đăng nhập</h2>
                     @Html.ValidationSummary(false)
                 <form asp-controller="Account" asp-action="Login1" method="post" name="myForm" onsubmit="return(validate());">
                     <input type="text" name="userName" asp-for="UserName" placeholder="User Name" />@Html.ValidationMessageFor(model => model.UserName)
@@ -38,7 +38,7 @@
                         
                         
                             <div>
-                                <a href="/@culture/Account/ForgotPassword"> Quên mật khẩu ?</a>
+                                <a href="/@culture/AccountRegister/ForgotPassword"> Quên mật khẩu ?</a>
                             </div>
                         
                     </div>

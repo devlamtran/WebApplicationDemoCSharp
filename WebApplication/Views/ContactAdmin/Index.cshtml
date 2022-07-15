@@ -18,11 +18,7 @@
 
     <!-- Page Heading -->
     <h1 class="h3 mb-2 text-gray-800">Danh sách Liên hệ</h1>
-    <p class="mb-4">
-        DataTables is a third party plugin that is used to generate the demo table below.
-        For more information about DataTables, please visit the <a target="_blank"
-                                                                   href="https://datatables.net">official DataTables documentation</a>.
-    </p>
+   
 
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
@@ -114,19 +110,13 @@
                                             </div>
                                             |
                                             <div class="col-md-4">
-                                                <form action="/@culture/ContactAdmin/Process/@Html.DisplayFor(modelItem => item.Id)">
+                                                <form action="/@culture/ContactAdmin/ResponseContact/@Html.DisplayFor(modelItem => item.Id)">
 
                                                     <input type="submit" value="Process" class="btn btn-warning" />
                                                 </form>
 
                                             </div>
-                                            |
-                                            <div class="col-md-1">
-                                                <form action="/@culture/ContactAdmin/Details/@Html.DisplayFor(modelItem => item.Id)">
-
-                                                    <input type="submit" value="Details" class="btn btn-primary" />
-                                                </form>
-                                            </div>
+                                           
                                         </div>
 
                                     </td>
